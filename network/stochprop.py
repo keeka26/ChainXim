@@ -100,6 +100,8 @@ class StochPropNetwork(Network):
         for msg in new_msg:
             if not self.miners[minerid]._isAdversary:
                 packet = PacketBDNet(msg, minerid, round, self.rcvprob_start, self)
+                # 生产者/原即时共享节点已满足的阈值在发布时计0轮。
+                self.record_block_propagation_time(packet, round)
                 self.network_tape.append(packet)
             else:
             # 如果是攻击者发出的，攻击者集团的所有成员都在下一轮收到
@@ -108,6 +110,8 @@ class StochPropNetwork(Network):
                 for miner in [m for m in self.adv_miners if m.miner_id != minerid]:
                     packet.update_trans_process(miner.miner_id, round)
                     miner._NIC.nic_receive(packet)
+                # 生产者/原即时共享节点已满足的阈值在发布时计0轮。
+                self.record_block_propagation_time(packet, round)
                 self.network_tape.append(packet)
 
 
@@ -158,26 +162,20 @@ class StochPropNetwork(Network):
 
 
     def record_block_propagation_time(self, packet: PacketBDNet, r):
-        '''calculate the block propagation time'''
+        """每包每阈值首次达到时计数，跨过多个阈值全部记录。
+
+        保留原含生产者的接收比例与 packet.round 时间起点，不改变接收者选择。
+        该量仍不是 dag_metrics中的诚实接收者cohort 指标。
+        """
         if not isinstance(packet.payload, Block):
             return
-
-        rn = len(packet.received_miners)
-        mn = self.MINER_NUM
-
-        def is_closest_to_percentage(a, b, percentage):
-            return a == math.floor(b * percentage)
-
-        rcv_rate = -1
-        rcv_rates = [k for k in self.stat_prop_times.keys()]
-        for p in rcv_rates:
-            if is_closest_to_percentage(rn, mn, p):
-                rcv_rate = p
-                break
-        if rcv_rate != -1 and rcv_rate in rcv_rates:
-            logger.info(f"{packet.payload.name}:{rn},{rcv_rate} at round {r}")
-            self.stat_prop_times[rcv_rate] += r-packet.round
-            self.block_num_bpt[rcv_rates.index(rcv_rate)] += 1
+        if not hasattr(packet, 'recorded_rates'):
+            packet.recorded_rates = set()
+        for i, rate in enumerate(self.stat_prop_times):
+            if rate not in packet.recorded_rates and len(packet.received_miners) >= math.ceil(rate*self.MINER_NUM):
+                packet.recorded_rates.add(rate)
+                self.stat_prop_times[rate] += r-packet.round
+                self.block_num_bpt[i] += 1
 
     def cal_block_propagation_times(self):
         rcv_rates = [k for k in self.stat_prop_times.keys()]

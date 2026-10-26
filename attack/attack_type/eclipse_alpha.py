@@ -55,9 +55,10 @@ class Eclipse(aa.AttackType):
         self._eclipse_block: Block = None # 记录 eclipse对象的newestblock状况
         
 
+    # 原子接口参数采用adver_list；无global_chain/network入参。
     def renew_stage(self,round):
         ## 1. renew stage
-        newest_block, mine_input, imcoming_block_from_eclipse = self.behavior.renew(miner_list = self.adver_list, 
+        newest_block, mine_input, imcoming_block_from_eclipse = self.behavior.renew(adver_list = self.adver_list, 
                                     honest_chain = self.honest_chain,round = round,eclipse_list_ids=self.eclipsed_list_ids)
         
         # renew eclipse part
@@ -78,11 +79,10 @@ class Eclipse(aa.AttackType):
 
 
         # 将A与Ve同步 A>=V
-        eclipse_height = self._eclipse_block.height
-        adver_height = self.adver_chain.get_height()
+        eclipse_height,adver_height = (self._eclipse_block.height,self.adver_chain.get_height())
         domain_flag = False
         if eclipse_height > adver_height:
-            if self.__judge_block_from(self._eclipse_block).blockhead.miner in self.adver_list_ids:
+            if (origin := self.__judge_block_from(self._eclipse_block)) is not None and origin.blockhead.miner in self.adver_list_ids:
                 self.adver_chain.add_block_forcibly(self._eclipse_block)
             else:
                 pass
@@ -105,27 +105,29 @@ class Eclipse(aa.AttackType):
         
 
         # 开挖
-        attack_mine,admin_block = self.behavior.mine(miner_list = self.adver_list,
+        attack_mine,admin_block = self.behavior.mine(adver_list = self.adver_list,
                                                      current_miner = current_miner,
                                                      miner_input = mine_input,
                                                      adver_chain = self.adver_chain,
-                                                     global_chain = self.global_chain,
+
                                                      consensus = self.adver_consensus,
                                                      round = round)
         if attack_mine or not domain_flag or (adver_height > honest_height and not domain_flag):
-            self.behavior.upload(network = self.network,
+            self.behavior.upload(
                                  adver_chain = self.adver_chain,
                                  current_miners = [current_miner],
                                  round = round,
-                                 miner_list = self.adver_list,
+                                 adver_list = self.adver_list,
                                  fork_block = self._fork_block,
                                  syncLocalChain = True)
             for miner in self.adver_list:
-                miner.consensus.local_chain.add_block_forcibly(self.adver_chain.get_last_block())
+                miner.consensus.local_chain.add_block_forcibly(self.adver_chain.last_block)
         elif domain_flag:
-            for miner in self.eclipsed_list:
-                miner.consensus.local_chain.add_block_forcibly(self.adver_chain.get_last_block())
-                self._eclipse_block = miner.consensus.local_chain.get_last_block()
+            # 只有目标ID，按原SPEC_TARGETS发送，不直接写受害者链。
+            self.behavior.upload(adver_chain=self.adver_chain,current_miners=[current_miner],
+                                 round=round,adver_list=self.adver_list,fork_block=self._fork_block,
+                                 strategy=SPEC_TARGETS,forward_target=self.eclipsed_list_ids,
+                                 syncLocalChain=True)
 
 
 
@@ -152,47 +154,47 @@ class Eclipse(aa.AttackType):
                 if self.__judge_block_from(newest_block_from_eclipse).blockhead.miner in self.adver_list_ids:
                 # 如果最新区块自攻击者的区块挖出来则接受
                     self.adver_chain.add_block_forcibly(newest_block_from_eclipse)
-                    attack_mine,admin_block = self.behavior.mine(miner_list = self.adver_list,
+                    attack_mine,admin_block = self.behavior.mine(adver_list = self.adver_list,
                                                                  current_miner = current_miner,
                                                                  miner_input = mine_input,
                                                                  adver_chain = self.adver_chain,
-                                                                 global_chain = self.global_chain, 
+
                                                                  consensus = self.adver_consensus,
                                                                  round = round)
-                    self.behavior.upload(network = self.network, 
+                    self.behavior.upload( 
                                          adver_chain = self.adver_chain,
                                          current_miner = current_miner, 
                                          round = round,
-                                         miner_list = self.adver_list,
+                                         adver_list = self.adver_list,
                                          fork_block = self._fork_block)
                 else:
-                    attack_mine,admin_block = self.behavior.mine(miner_list = self.adver_list,
+                    attack_mine,admin_block = self.behavior.mine(adver_list = self.adver_list,
                                                                  current_miner = current_miner,
                                                                  miner_input = mine_input,
                                                                  adver_chain = self.adver_chain,
-                                                                 global_chain = self.global_chain, 
+
                                                                  consensus = self.adver_consensus,
                                                                  round = round)
                     for ec_miner in self.eclipsed_list:
-                        ec_miner.consensus.local_chain.add_block_forcibly(self.adver_chain.get_last_block())
+                        ec_miner.consensus.local_chain.add_block_forcibly(self.adver_chain.last_block)
             else:
-                attack_mine,admin_block = self.behavior.mine(miner_list = self.adver_list,
+                attack_mine,admin_block = self.behavior.mine(adver_list = self.adver_list,
                                                             current_miner = current_miner,
                                                             miner_input = mine_input,
                                                             adver_chain = self.adver_chain,
-                                                            global_chain = self.global_chain, 
+
                                                             consensus = self.adver_consensus,
                                                             round = round)  
                 if attack_mine:
-                    self.behavior.upload(network = self.network, 
+                    self.behavior.upload( 
                                          adver_chain = self.adver_chain,
                                          current_miner = current_miner, 
                                          round = round,
-                                         miner_list = self.adver_list,
+                                         adver_list = self.adver_list,
                                          fork_block = self._fork_block)
                 else:
                     for ec_miner in self.eclipsed_list:
-                        ec_miner.consensus.local_chain.add_block_forcibly(self.adver_chain.get_last_block())         
+                        ec_miner.consensus.local_chain.add_block_forcibly(self.adver_chain.last_block)         
         else:
             # 判断来自eclipse的区块的情况
             if len(imcoming_block_from_eclipse) >0:
@@ -203,49 +205,49 @@ class Eclipse(aa.AttackType):
 
             
             if newest_block_from_eclipse.get_height() <= self.adver_chain.get_height():
-                    attack_mine,admin_block = self.behavior.mine(miner_list = self.adver_list,
+                    attack_mine,admin_block = self.behavior.mine(adver_list = self.adver_list,
                                                                  current_miner = current_miner,
                                                                  miner_input = mine_input,
                                                                  adver_chain = self.adver_chain,
-                                                                 global_chain = self.global_chain, 
+
                                                                  consensus = self.adver_consensus,
                                                                  round = round)
-                    self.behavior.upload(network = self.network, 
+                    self.behavior.upload( 
                                          adver_chain = self.adver_chain,
                                          current_miner = current_miner, 
                                          round = round,
-                                         miner_list = self.adver_list,
+                                         adver_list = self.adver_list,
                                          fork_block = self._fork_block)
             else:
                 if newest_block_from_eclipse.blockhead.miner in self.adver_list_ids:
                     self.adver_chain.add_block_forcibly(newest_block_from_eclipse)
-                    attack_mine,admin_block = self.behavior.mine(miner_list = self.adver_list,
+                    attack_mine,admin_block = self.behavior.mine(adver_list = self.adver_list,
                                                                  current_miner = current_miner,
                                                                  miner_input = mine_input,
                                                                  adver_chain = self.adver_chain,
-                                                                 global_chain = self.global_chain, 
+
                                                                  consensus = self.adver_consensus,
                                                                  round = round)
-                    self.behavior.upload(network = self.network, 
+                    self.behavior.upload( 
                                          adver_chain = self.adver_chain,
                                          current_miner = current_miner, 
                                          round = round,
-                                         miner_list = self.adver_list,
+                                         adver_list = self.adver_list,
                                          fork_block = self._fork_block)
                 else:
-                    attack_mine,admin_block = self.behavior.mine(miner_list = self.adver_list,
+                    attack_mine,admin_block = self.behavior.mine(adver_list = self.adver_list,
                                                                  current_miner = current_miner,
                                                                  miner_input = mine_input,
                                                                  adver_chain = self.adver_chain,
-                                                                 global_chain = self.global_chain, 
+
                                                                  consensus = self.adver_consensus,
                                                                  round = round)
                     if attack_mine:
-                        self.behavior.upload(network = self.network, 
+                        self.behavior.upload( 
                                             adver_chain = self.adver_chain,
                                             current_miner = current_miner, 
                                             round = round,
-                                            miner_list = self.adver_list,
+                                            adver_list = self.adver_list,
                                             fork_block = self._fork_block)
         '''
 
@@ -254,7 +256,7 @@ class Eclipse(aa.AttackType):
 
     def clear_record_stage(self,round):
         ## 3. clear and record stage
-        self.behavior.clear(miner_list = self.adver_list)# 清空
+        self.behavior.clear(adver_list = self.adver_list)# 清空
         # self._log['round'] = round
         self._log['honest_chain'] = self.honest_chain.last_block.name + ' Height:' + str(self.honest_chain.last_block.height)
         self._log['adver_chain'] = self.adver_chain.last_block.name + ' Height:' + str(self.adver_chain.last_block.height)
@@ -276,13 +278,14 @@ class Eclipse(aa.AttackType):
     def __judge_block_from(self,block:Block) -> Block:
         while block!=None and block.blockhead.miner in self.eclipsed_list_ids :
             block = block.parentblock
-            if block.blockhead.miner in self.adver_list_ids:
+            if block is None or block.blockhead.miner in self.adver_list_ids:
                 break
         return block
         
-    def info_getter(self):
+    def info_getter(self,miner_num=None):
         
-        loop_block = self.global_chain.last_block
+        # 策略原本没有global_chain；统计联盟实际已知视图。
+        loop_block = self.adver_chain.last_block
         main_chain_height = loop_block.height
         adver_block_num = 0
         tmp_eclipse = 0
@@ -312,7 +315,7 @@ class Eclipse(aa.AttackType):
         
 
         all_blocks_from_eclipse = []
-        for hash,block in self.global_chain.block_set.items():
+        for hash,block in self.adver_chain.block_set.items():
             if block.blockhead.miner in self.eclipsed_list_ids:
                 all_blocks_from_eclipse.append(block)
                     
@@ -326,17 +329,17 @@ class Eclipse(aa.AttackType):
                 for eb in all_eclipse_blocks:
                     print(eb.name, '\n',file=f)
         
-        miner_num = len(self.miner_list)
-        eclipse_rate = len(self.eclipsed_list)/miner_num
+        miner_num = (miner_num or global_var.get_miner_num())
+        eclipse_rate = len(self.eclipsed_list_ids)/miner_num
         adversart_rate = len(self.adver_list)/miner_num
         return {'Number of Adversary blocks': '{}'.format(adver_block_num),
                 'Number of blocks eclipsed by adversary': '{}'.format(eclipse_block),
                 'Number of blocks generated by eclipsed miners': '{}'.format(len(all_blocks_from_eclipse)),
-                'Utilization rate of eclipse blocks': '{:.5f}'.format(eclipse_block/len(all_blocks_from_eclipse)),
-                'Equivalent improvement of adversary': '{:.5f}(↑{:.5f})'.format((adver_block_num+eclipse_block)/main_chain_height,(adver_block_num+eclipse_block)/adver_block_num),
+                'Utilization rate of eclipse blocks': '{:.5f}'.format(eclipse_block/max(1,len(all_blocks_from_eclipse))),
+                'Equivalent improvement of adversary': '{:.5f}(↑{:.5f})'.format((adver_block_num+eclipse_block)/max(1,main_chain_height),(adver_block_num+eclipse_block)/max(1,adver_block_num)),
                 'Recommended equivalent improvement of adversary ': '{:.5f}(↑{:.5f})'.format(adversart_rate/(1-eclipse_rate),1/(1-eclipse_rate)),
-                # 'Union attack by adversary and eclipsed miner:': '{}'.format((adver_block_num+eclipse_block)/main_chain_height),
-                # 'Reference rate': '{:.4f}'.format((len(self.adver_list)+len(self.eclipsed_list))/len(self.miner_list))
+                # 'Union attack by adversary and eclipsed miner:': '{}'.format((adver_block_num+eclipse_block)/max(1,main_chain_height)),
+                # 'Reference rate': '{:.4f}'.format((len(self.adver_list)+len(self.eclipsed_list_ids))/(miner_num or global_var.get_miner_num()))
                 }
     
 

@@ -138,6 +138,9 @@ class TopologyNetwork(Network):
     def __del__(self):
         # 在退出之前保存路由信息
         if self._save_routing_history:
+            # 显式输出已flush，清理后不重建临时目录。
+            if self._dag_settings and not self.NET_RESULT_PATH.exists():
+                return
             self.save_rest_routing_process()
 
     def set_net_param(self, init_mode = None, 
@@ -200,8 +203,13 @@ class TopologyNetwork(Network):
         if avg_tp_change_interval is not None:
             self._avgTpChangeInterval = avg_tp_change_interval
             self._TpChangeSpan = 0.2*self._avgTpChangeInterval
-            self._nextTpChangeRound += int(np.random.uniform(self._avgTpChangeInterval-self._TpChangeSpan,
-                                                             self._avgTpChangeInterval+self._TpChangeSpan))
+            next_delay = int(np.random.uniform(self._avgTpChangeInterval-self._TpChangeSpan,
+                                               self._avgTpChangeInterval+self._TpChangeSpan))
+            # DAG离散调度至少前进1轮，避免截断为0后永久停在旧轮。
+            # 原单链保留原采样/整数截断语义。
+            if self._dag_settings:
+                next_delay = max(1, next_delay)
+            self._nextTpChangeRound += next_delay
         if edge_remove_prob is not None:
             self._edgeRemoveProb = edge_remove_prob
         if edge_add_prob is not None:
@@ -250,6 +258,13 @@ class TopologyNetwork(Network):
             return False
         inv = new_msgs[0]
         getDataReply = new_msgs[1]
+        # 免费控制调用也必须经过真实当前邻接关系。
+        # 已识别的不可达 INV 在此结束，不能落入正文发送或读取远端库存。
+        if self._dag_settings and (not self._graph.has_edge(inv.source, inv.target)
+                or not 0 <= inv.source < self.MINER_NUM or not 0 <= inv.target < self.MINER_NUM
+                or inv.target not in self._miners[inv.source]._NIC._neighbors
+                or inv.source not in self._miners[inv.target]._NIC._neighbors):
+            return True
         getData = self._miners[inv.target]._NIC.reply_getdata(inv)
         for attr, value in getData.__dict__.items():
             setattr(getDataReply, attr, value)
@@ -361,8 +376,13 @@ class TopologyNetwork(Network):
             node2 = random.choice(list(non_neighbors))
             changed = changed or self.try_add_edge(int(node1), int(node2), change_op,round)
 
-        self._nextTpChangeRound += int(np.random.uniform(self._avgTpChangeInterval-self._TpChangeSpan,
-                                                         self._avgTpChangeInterval+self._TpChangeSpan))
+        next_delay = int(np.random.uniform(self._avgTpChangeInterval-self._TpChangeSpan,
+                                           self._avgTpChangeInterval+self._TpChangeSpan))
+        # DAG离散调度至少前进1轮，避免截断为0后永久停在旧轮。
+        # 原单链保留原采样/整数截断语义。
+        if self._dag_settings:
+            next_delay = max(1, next_delay)
+        self._nextTpChangeRound += next_delay
 
         if changed:
             sub_nets = [[int(n) for n in sn] for sn in nx.connected_components(self._graph)]
@@ -467,6 +487,12 @@ class TopologyNetwork(Network):
         '''calculate the block propagation time'''
         if isinstance(msg, Block) is False:
             return
+        # DAG完整wire统计由Network按hash首次记录。
+        if msg.blockhead.header_version == 2:
+            if len(self._rcv_miners[msg.name]) == self.MINER_NUM and -1 not in self._rcv_miners[msg.name]:
+                self._rcv_miners[msg.name] = {-1}
+                self.save_specific_routing_process(msg.name)
+            return
         rn = len(self._rcv_miners[msg.name])
         mn = self.MINER_NUM
 
@@ -535,10 +561,11 @@ class TopologyNetwork(Network):
                 raise errors.NetGenError('网络生成方式错误！')
             
             #检查是否有孤立节点或不连通部分
-            if nx.number_of_isolates(self._graph) != 0:
+            # DAG允许初始分区；能否最终同步由真实可达性决定。
+            if not self._dag_settings and nx.number_of_isolates(self._graph) != 0:
                 raise errors.NetUnconnetedError(f'Isolated nodes in the network! '
                     f'{list(nx.isolates(self._graph))}')
-            if nx.number_connected_components(self._graph) != 1:
+            if not self._dag_settings and nx.number_connected_components(self._graph) != 1:
                 if gen_net_approach != 'rand':
                     raise errors.NetIsoError('Brain-split in the newtork! ')
                 retry_num = 10
@@ -599,6 +626,10 @@ class TopologyNetwork(Network):
 
     def gen_network_rand(self, ave_degree, rand_mode):
         """生成随机图"""
+        # 单节点DAG是合法无peer实验。
+        if self._dag_settings and self.MINER_NUM == 1:
+            self._graph = nx.empty_graph(1)
+            return
         if rand_mode == 'homogeneous':
             self._graph = self.random_graph_with_fixed_degree(self.MINER_NUM, ave_degree)
         elif rand_mode == 'binomial':
@@ -606,8 +637,9 @@ class TopologyNetwork(Network):
                                             ave_degree/(self.MINER_NUM-1))
         else:
             raise errors.NetGenError(f'Random network mode {rand_mode} is not supported!')
-        # 防止出现孤立节点
-        if nx.number_of_isolates(self._graph) > 0:
+        # DAG保留真实孤立节点/分区，后续按可达性同步。
+        # 原单链随机拓扑仍沿用其孤立节点修补。
+        if not self._dag_settings and nx.number_of_isolates(self._graph) > 0:
             iso_nodes = list(nx.isolates(self._graph))
             not_iso_nodes = [nd for nd in list(self._graph.nodes) if nd not in iso_nodes]
             targets = np.random.choice(not_iso_nodes, len(iso_nodes))
@@ -709,9 +741,16 @@ class TopologyNetwork(Network):
             'Degree Histogram': nx.degree_histogram(self._graph),
             "Average Degree": sum(dict(nx.degree(self._graph)).values())/len(self._graph.nodes),
             'Average Cluster Coefficient':round(nx.average_clustering(self._graph), 3),
-            'Degree Assortativity':round(nx.degree_assortativity_coefficient(self._graph), 3),
+            # 常度/无边图该系数未定义，显式None。
+            'Degree Assortativity': (None if self._dag_settings and len(
+                {self._graph.degree(n) for e in self._graph.edges for n in e}) < 2
+                else round(nx.degree_assortativity_coefficient(self._graph), 3)),
         }
-        if self.is_small_network():
+        # 分区图全图路径长度未定义，不能阻断合法启动。
+        if self._dag_settings and not nx.is_connected(self._graph):
+            network_attributes['Diameter'] = None
+            network_attributes['Average Shortest Path Length'] = None
+        elif self.is_small_network():
             network_attributes['Diameter'] = nx.diameter(self._graph)
             network_attributes['Average Shortest Path Length'] = round(nx.average_shortest_path_length(self._graph), 3)
         else: 
@@ -728,6 +767,9 @@ class TopologyNetwork(Network):
             network_attributes['Diameter'] = diameter(self._graph)
             network_attributes['Average Shortest Path Length'] = round(approximate_avg_shortest_path(self._graph), 3)
 
+        # 标明真实分区数；不自动连通DAG实验图。
+        if self._dag_settings:
+            network_attributes['Connected Components'] = nx.number_connected_components(self._graph)
         NET_RESULT_PATH = global_var.get_net_result_path()
         with open(NET_RESULT_PATH / 'Network Attributes.txt', 'a+', encoding='utf-8') as f:
             f.write('Network Attributes'+'\n')
@@ -814,6 +856,22 @@ class TopologyNetwork(Network):
         elif self._save_routing_graph is True:  
             print('Generate routing gragh for each block from json...')
             NET_RESULT_PATH = global_var.get_net_result_path()
+            # 原写入器实际输出JSONL的节点/轮次对。
+            # DAG读取真实格式并沿用原SVG绘图器；旧分支读取行为保持不变。
+            if self._dag_settings:
+                with open(NET_RESULT_PATH / 'routing_history.json', encoding='utf-8') as f:
+                    for line in f:
+                        for blockname, entries in json.loads(line).items():
+                            if not entries:
+                                continue
+                            routes = {}
+                            for source, target in entries:
+                                src, sent = next(iter(source.items()))
+                                dst, received = next(iter(target.items()))
+                                routes[int(src), int(dst)] = [sent, received]
+                            origin = int(next(iter(entries[0][0])))
+                            self.gen_routing_gragh(blockname, routes, origin)
+                return
             with open(NET_RESULT_PATH / 'routing_history.json', 'r', encoding = 'utf-8') as load_obj:
                 a = json.load(load_obj)
                 for v_dict in a:

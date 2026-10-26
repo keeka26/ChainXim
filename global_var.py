@@ -23,6 +23,8 @@ def __init__(result_path:Path = None):
     初始化
     '''
     _var_dict['MINER_NUM']=0
+    # 每次实验重置；旧单链保持空字典。
+    _var_dict['DAG_SETTINGS'] = {}
     _var_dict['POW_TARGET']=''
     _var_dict['AVE_Q']=0
     _var_dict['CONSENSUS_TYPE']='consensus.PoW'
@@ -140,3 +142,14 @@ def set_attack_execute_type(attack_execute_type):
 def get_attack_execute_type():
     '''定义攻击类型'''
     return _var_dict['ATTACK_EXECUTE_TYPE']
+
+# 保存已验证的纯标量 DAG 配置。
+# 原入口现已调用；seed 初始化在 main 中，不在这里隐式重置 RNG。
+def set_dag_settings(settings: dict):
+    """复制配置，防止调用者修改全局共享设置；当前值均为标量。"""
+    _var_dict['DAG_SETTINGS'] = dict(settings)
+
+
+def get_dag_settings() -> dict:
+    """返回独立字典；旧单链/新实验尚未设置时返回空字典。"""
+    return dict(_var_dict['DAG_SETTINGS'])

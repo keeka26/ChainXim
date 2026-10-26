@@ -39,6 +39,33 @@ def R(last_block:Block):
             block = block.parentblock
     return xc
 
+# 冻结原抽象项编码；bytes比较不依赖主机array('Q')字节序。
+DATAITEM_BYTES = 8
+
+
+def split_dataitems(content: bytes) -> tuple[bytes, ...]:
+    """按原random_id:u32be + input_round:u32be拆项，拒绝不完整8字节项。"""
+    if type(content) is not bytes or len(content) % DATAITEM_BYTES:
+        raise ValueError('dataitem content must contain complete 8-byte items')
+    return tuple(content[i:i+DATAITEM_BYTES] for i in range(0, len(content), DATAITEM_BYTES))
+
+
+def read_ordered_dataitems(chain: Chain) -> tuple[bytes, ...]:
+    """按本地已安装Conflux order和块内顺序读唯一项；不读未排序旁支。
+
+    创世无数据项；去重保留第一次出现位置。排序不表示确认。原R旧模式保持不变。
+    """
+    if not chain._dag_mode or chain.protocol_view is None:
+        raise ValueError('ordered dataitems require an installed DAG protocol view')
+    unique = dict()
+    for h in chain.protocol_view.order:
+        block = chain.block_set[h]
+        if not block.isGenesis:
+            for item in split_dataitems(block.blockhead.content):
+                unique.setdefault(item, None)
+    return tuple(unique)
+
+
 MAX_SUFFIX = 10 # 最大链后缀回溯距离
 
 def common_prefix(prefix1:Block, prefix2:Block):

@@ -1,0 +1,2449 @@
+{
+  "schema_version": "chainxim_honest_plot_audit_v3",
+  "grid": {
+    "schema_version": "chainxim_honest_analysis_grid_v1",
+    "fixed": {
+      "rounds": 10000,
+      "miners": 10,
+      "q": 5,
+      "difficulty": 8,
+      "blocksize": 2.0
+    },
+    "axes": {
+      "miners": [
+        10
+      ],
+      "hashrate": [
+        5
+      ],
+      "difficulty": [
+        8
+      ],
+      "blocksize": [
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20
+      ]
+    },
+    "networks": [
+      "LockstepNetwork",
+      "DeterPropNetwork",
+      "StochPropNetwork",
+      "TopologyNetwork",
+      "AdHocNetwork"
+    ],
+    "seeds": [
+      7
+    ],
+    "losses": [
+      "low",
+      "medium",
+      "high"
+    ]
+  },
+  "throughput": "eventual",
+  "case_throughput": {
+    "blocksize": "eventual"
+  },
+  "ledger_scope": {
+    "Bitcoin": "original num_of_valid_blocks / mining rounds",
+    "DAG": "all-node order longest common prefix at mining end / mining rounds; metrics summary or legacy snapshot, excluding genesis; current agreement, not finality"
+  },
+  "throughput_scopes": {
+    "total": "both protocols: all generated non-genesis blocks / actual mining rounds",
+    "eventual": "potential utilization proxy: Bitcoin original main count / rounds; DAG generated / rounds assuming valid blocks eventually disseminate and enter the order; not measured network capacity",
+    "current_order": "Bitcoin original main count / rounds; DAG all-node order common prefix / rounds",
+    "bitcoin_original_main": "num_of_valid_blocks unchanged: common prefix of global selected chain and height-selected honest nodes, controlled by consensus_miner_quantile; default -1 selects one longest honest node",
+    "reference_ordered": "DAG reference-node metric retained for local diagnostics; not used for the common-order curve"
+  },
+  "grid_source": "cli",
+  "grid_sha256": "88fa72c60248dc1cefe31d975bdc27aea4abaa16f3368ed54d3b14f93e31a59c",
+  "observed_points": 60,
+  "missing_points": [],
+  "files": [
+    "blocksize_eventual_throughput_MB.png",
+    "blocksize_eventual_throughput_MB.pdf"
+  ],
+  "seed_band": "observed min/max, not confidence interval; deterministic PoW seeds need not be independent",
+  "inputs": [
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/low/b2/seed7",
+      "sha256": {
+        "parameters.txt": "70467d4b3a118106fb167b9ff2a636f02e82a8c83d414e764e5c044390e6afb2",
+        "evaluation results.txt": "9daf49c7f6f103c55e2392887f31f61d8abfbf61b51ae4b8c8daf0e09f89f443",
+        "Chain Data/chain_data.txt": "b5fa236d3ef075c16433be65df696fe479c275787abd9ce191595631f5099bd5"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "low"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/low/b4/seed7",
+      "sha256": {
+        "parameters.txt": "525a19260f51690c79f445635aba833c88c139ab921e0eae3b0fe939fc7a011a",
+        "evaluation results.txt": "afc3e83f2c8453c9a01d219ac969a0e796e720cd39647779948969f733ceac74",
+        "Chain Data/chain_data.txt": "61d67e6a0eddbe3ad70edc750b48485a2d97788f84598fa34a846a38cbfdb23b"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "low"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/low/b6/seed7",
+      "sha256": {
+        "parameters.txt": "72a9b87a17d018f5e0869b4641da27b2c3961e89880d2ec9ee9d27573db3f7a6",
+        "evaluation results.txt": "394e5b99a122ac45087abed686d0882f725304cd22a4ef6db914f73ec37be282",
+        "Chain Data/chain_data.txt": "55cac037a02e123984f6a94cfb2ddcd030acf92d8f39df519160ce7116c50c4d"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "low"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/low/b8/seed7",
+      "sha256": {
+        "parameters.txt": "cfd60d9063a08b1cfa99c95953740f4f162fe51658b609274ff088356c904958",
+        "evaluation results.txt": "29acf38bc4990ff0587176638db16bb70746cb5aa3cc01da7b1230bf529d4423",
+        "Chain Data/chain_data.txt": "48772530ad04ee1e364ab413b37cfb04869ce950fb81f2240d18f189c912ab24"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "low"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/low/b10/seed7",
+      "sha256": {
+        "parameters.txt": "b228fe217932770fcf277da55ddd6456f3b62d20286e9bf3c504e63a21cb267e",
+        "evaluation results.txt": "a17ee8b451795f93e42196525948ee32a7c7cddd858460bd16a8d53abd19439d",
+        "Chain Data/chain_data.txt": "d34fc9c1746b4e89545febd3819bc682ab1b5e9b0734f820185a484f00ec6dd4"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "low"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/low/b12/seed7",
+      "sha256": {
+        "parameters.txt": "d8d2fe7be7dc9ce1e8a6f28b1a6c769888a249f0534d4e8c84f8e40a0b888bef",
+        "evaluation results.txt": "4dde6bdf292012400406b267c4b9a37d8f4d0b764604a70b77563956598f8817",
+        "Chain Data/chain_data.txt": "2cb2ef5d9f80328c7ed958eabcaf9f353a007272f7f186acadaa6a1370e2f962"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "low"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/low/b14/seed7",
+      "sha256": {
+        "parameters.txt": "4b095112970c752a8d643eeec0ea8062e4abf482dec047ba0ded7603572b9f7e",
+        "evaluation results.txt": "6bae4b5efefbe2d5960bad85ec71d80a6b1973dd5f8ea9a0221dd53901f69107",
+        "Chain Data/chain_data.txt": "fb50e4fc7f98edebaa82ed93458623b0a85853a9490e7dcb50eab097cd06e92e"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "low"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/low/b16/seed7",
+      "sha256": {
+        "parameters.txt": "881254dc7dc9254024b459c444d8808141303d8a71d1959aa812b3c9c2a63cc0",
+        "evaluation results.txt": "87b062a6795a9e96214bd103e801588d95db726f129ca704f59e8bc8abee70ed",
+        "Chain Data/chain_data.txt": "61910e7443b964ac995c351dcaed72b74ecbf55bafc02fb4ce094c256df64b75"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "low"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/low/b18/seed7",
+      "sha256": {
+        "parameters.txt": "56c1a0e7082c2963e6b555d3f191929a63354f1c16ea4cc249152c0981321e63",
+        "evaluation results.txt": "0d19d24525f3f00bfc3f6e4298d1f9680f43457516aface0412a964a735de315",
+        "Chain Data/chain_data.txt": "d674bd96f39018715e05e6eab2dcd60e7b507ac50a78e53acb3905d7f27dc910"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "low"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/low/b20/seed7",
+      "sha256": {
+        "parameters.txt": "ba8fbd1df68c70152fe5a83df7fca1d864afe0aaa0d45806fc1bea1824e72619",
+        "evaluation results.txt": "bb4822038780bda42fa7dc84bfa70c89665d9fded1e46d67fff937a26760c510",
+        "Chain Data/chain_data.txt": "c5848bb614e7f50eb8e7faacae295497e71f1f89cb4bd7fcbbebfa83d22553b6"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "low"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/medium/b2/seed7",
+      "sha256": {
+        "parameters.txt": "0593c5a34c7e9ce4b9df75a2692b161121b120b742cce2bb65ca70f8a91ecc49",
+        "evaluation results.txt": "c246271e61482736e95af57d4222ebbeb4689baf48b572c26f96db8d0b1d6730",
+        "Chain Data/chain_data.txt": "c8f28a90424c678f2bb56dbc092eafd3505806ee3b24188e9549104ca5d0a281"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "medium"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/medium/b4/seed7",
+      "sha256": {
+        "parameters.txt": "25b396200b37a4349a596f3e434df9acc6ad3aa1e20eede3ec67e23ed0b34e5c",
+        "evaluation results.txt": "05f7ccc29d223d716263a640281b371a14d0da057c41af8d17a102c430f26df3",
+        "Chain Data/chain_data.txt": "b651ecc42852a2d4020f5c162d596fb929df907c87712771c79bd61d97835f0e"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "medium"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/medium/b6/seed7",
+      "sha256": {
+        "parameters.txt": "315bfee17d4ea8271272218a5e6793995bb559dd66db44db894988c37e20dae4",
+        "evaluation results.txt": "5dbc77ccd6c0daaba738c18355a12a19454be03f06b5adcc1809aba4c3dd0902",
+        "Chain Data/chain_data.txt": "c0db670efabc4edb7d914dbdf872736ed3ef5dcb9e597ba8ef49d438001f5900"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "medium"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/medium/b8/seed7",
+      "sha256": {
+        "parameters.txt": "2996faae48999755cc7e7f3fa023ff24b51761ca2b161d84ef10905d48bb03f3",
+        "evaluation results.txt": "da540690e690060044b94023901458d205e6c01741a7e028f5c8924c7c5a152e",
+        "Chain Data/chain_data.txt": "6c335460050efe7bec5073a046779d9bf4cba8f4147156caf0476ea363074151"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "medium"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/medium/b10/seed7",
+      "sha256": {
+        "parameters.txt": "69156ee61fe1848dc7a05213c7b993de36dbf2a8e39b7c8711b92e34c5324ef6",
+        "evaluation results.txt": "0d35fce8ab68506f3cecd36f721ccac58fe109a4eb06e275166fbd14118ad082",
+        "Chain Data/chain_data.txt": "ceed09367fe25046722c742ccf0cd1223569551029a6d37de09cc85c11d3551c"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "medium"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/medium/b12/seed7",
+      "sha256": {
+        "parameters.txt": "e2ef36c437f900dcf9b274de7f62ca77ddaa9bff933a577957e32eb6ecc2c656",
+        "evaluation results.txt": "32877f50f57e82fc55b734a2952218b8fdd5e7d742d16c2f7f1ccb5d2290c5fe",
+        "Chain Data/chain_data.txt": "9f827b49405da44c29fd7f0e7146b6abe372e5308a921a3eb1811f2c2213c814"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "medium"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/medium/b14/seed7",
+      "sha256": {
+        "parameters.txt": "fdce838ffc8da4baf6aacea922e38a498696d3fa8dbc6bbbcd7f58ee1b7f0d3b",
+        "evaluation results.txt": "eafa56a9607a33ec5a4aafb4d81f09e3afc09326e0d85e788863a8e924397888",
+        "Chain Data/chain_data.txt": "0692d00400f7d80e3a221b90bdcfa60c3ff29325e4b577034addfaa372970f62"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "medium"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/medium/b16/seed7",
+      "sha256": {
+        "parameters.txt": "99327bb72a644d67c05760b176a1789d48a333790d3b5084c1d46e6b663a1279",
+        "evaluation results.txt": "78e97cf121f253be95388a6f04e7c1547bd50cde302664422725bcf7d0db5db3",
+        "Chain Data/chain_data.txt": "58042b561a55d030b3d787b8ecde52798f2f7e0ec3be6ef8b0e85c9da900e468"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "medium"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/medium/b18/seed7",
+      "sha256": {
+        "parameters.txt": "6653bcd1eafbe619a47f6f94b84d4f76e8799f93213b9fdee18aec0ed3f89e95",
+        "evaluation results.txt": "272e3e7eb333ceba9e38b8ce49c65c67a027710590338c837dd274101f02fda2",
+        "Chain Data/chain_data.txt": "fad8698674829bec3b7af2f1c6bd4b9cf80ad6fa24e82b911bd2aa318e6360ac"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "medium"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/medium/b20/seed7",
+      "sha256": {
+        "parameters.txt": "27df2a78b908eee7b09ed8a89dda2f92d43610905a9a3ecbebf667d2a2485f54",
+        "evaluation results.txt": "a5aac17f4de98518bbcd1cebdb0cc3efc3239c174b62087a61a75cc3da14adb5",
+        "Chain Data/chain_data.txt": "b973d2ce917b2f4edaa1c2ea555f64e31dae9fc06ee884e4e48633883010dda5"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "medium"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/high/b2/seed7",
+      "sha256": {
+        "parameters.txt": "4b13d478899a63b8a74c9f0c6058a52342915200f3bedadb9847b17e75f9c450",
+        "evaluation results.txt": "31b98fc5b3c9dba13cc45df86e82df0cef9093cfde8775e91553b28a736eaea0",
+        "Chain Data/chain_data.txt": "b2e7c9684617b78db59319f2f5be56fc0433717d0547d067e048a4033ed0cc2f"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "high"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/high/b4/seed7",
+      "sha256": {
+        "parameters.txt": "bf110659c1b0af424e215f81586e63d0d8ba690bc7ecb3341b635dcfc8c2a7e7",
+        "evaluation results.txt": "38ba3d84cfcb67d094a866bfab54aa9510af60892575f2b20f744c2e6c14167a",
+        "Chain Data/chain_data.txt": "ce8998d95c6071a1cba1f3a7750e77bcab58b5426cc622e26a2eab6e9d27e883"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "high"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/high/b6/seed7",
+      "sha256": {
+        "parameters.txt": "21116ce4688f20d68de40ae762e0a2cd2248dea32c413d17bc0e6646b873c742",
+        "evaluation results.txt": "4cc9e18bb722049f79b79645b7687ed0d90bb15bcb6181c5b38a17f3db0f5f61",
+        "Chain Data/chain_data.txt": "a85158a1e21aec73ed7c6dad176caca4e76abf5de6d15ed5f88c6024d957d7dc"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "high"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/high/b8/seed7",
+      "sha256": {
+        "parameters.txt": "dda2cc2762d52a33e26110aa0f2b5e22f229fa2575abeb92c845effc37601b4e",
+        "evaluation results.txt": "514a8469a9678a505e0e271ebd9a8f0f05fe35a5e890519ea4e347a813840db6",
+        "Chain Data/chain_data.txt": "7c7383ff5d919cfd3634d06e9f944cb6c294fee96300e414861faf909c534bb3"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "high"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/high/b10/seed7",
+      "sha256": {
+        "parameters.txt": "59e26373b44cf1b6f04da3b9eaefdce01491ca1c76cd52577c6dcb079407e9f8",
+        "evaluation results.txt": "051b2f64168b38bcc9011f2dd291b3730824e2914a659182f1b7b70e39bdc057",
+        "Chain Data/chain_data.txt": "be602f49b7f14713fc74f0a413fbcde80b1cc6b95710a0fa02620ba1b912b684"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "high"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/high/b12/seed7",
+      "sha256": {
+        "parameters.txt": "a95a3b2a0a27dec1903e70838574bf088003606bcca5333c776a902359555bac",
+        "evaluation results.txt": "8adf1a4e6b479a718d75142ea68cc79d63daf75be51f216a2dfca99a35867fe8",
+        "Chain Data/chain_data.txt": "fcb14b83e7e4f146e9267045109455b3d2f632518c5b9fea8a1d00fe373d641d"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "high"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/high/b14/seed7",
+      "sha256": {
+        "parameters.txt": "76e4988b68e154ae6a70b33f1848c743431034115aa15410f3f5877e1ffe7732",
+        "evaluation results.txt": "f7a034959e7fe425945e0d2c24dbf21ee10eeaa80d06b433814616969f962f6d",
+        "Chain Data/chain_data.txt": "ea5eea6226527335280ac794f65edf489d61293cf11eec2267e071fb785b0ec5"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "high"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/high/b16/seed7",
+      "sha256": {
+        "parameters.txt": "39ba63913a8fcc8ce147bf633acc8249169b85c0cad7bf54431424ede47329be",
+        "evaluation results.txt": "b9676f2b23f852fc41b4a665325ae532ffa3a1076effcf7a71f5893c056812ad",
+        "Chain Data/chain_data.txt": "245fa34a24ccb79552a8925a8df951382b3b663f17cff3cc4570b0a94ace542e"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "high"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/high/b18/seed7",
+      "sha256": {
+        "parameters.txt": "e439f1a86d1bfd306553038877021d9152a8469e75ea1f117de19ac9496a682b",
+        "evaluation results.txt": "5f4a2b48a7fd17820639ad911aa0558a12f6d0dd2d131f870bee69b6237b764c",
+        "Chain Data/chain_data.txt": "3354af7ec8296beecd33eca467fd34363ad96b77de952ca250984b8c3d7b338b"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "high"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/Bitcoin/AdHocNetwork/high/b20/seed7",
+      "sha256": {
+        "parameters.txt": "72af6a0f3414be03804315a8d42bfd9758063c18e50dff45b27048e3f13c1d2f",
+        "evaluation results.txt": "82b4f704f0acccc29647b7e8bcf35a6eeabc0f78ec3eebbd7d3424d5b0b6add2",
+        "Chain Data/chain_data.txt": "d6ddc43a7a5ad45105a111c1f8d07e7d2286f52b66a7e250ec1ff4412138e23a"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 3.0,
+        "region_width": 100.0,
+        "comm_range": 30.0,
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.5,
+        "bandwidth_max": 100.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "path_loss_level": "high"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/low/b2/seed7",
+      "sha256": {
+        "run_manifest.json": "5359f494af69f84227f228fdcd4607c75034c417b24535a2d61651090687166a",
+        "dag_metrics.json": "5b472a85e1398f654580ed090ae9a6143cc6a07c360d897677d541db36139bad"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "low",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/low/b4/seed7",
+      "sha256": {
+        "run_manifest.json": "3d6f36c204334985398f92ed53d2019728ed6f5c694e651df67ea787cc828794",
+        "dag_metrics.json": "a3f0361b9a7417224cfeead085dfd37ade17c90a697f4ecc445f47a6f0dffff3"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "low",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/low/b6/seed7",
+      "sha256": {
+        "run_manifest.json": "5d6f14b827be572cdaa91b8fbde5a36249517612b463addc3243be49ebd68548",
+        "dag_metrics.json": "0ac51e0558157ce4d17ecdf815b9594ee6087847cfbb1abfb7f2649b60d56e21"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "low",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/low/b8/seed7",
+      "sha256": {
+        "run_manifest.json": "0bbbb8adad3a763068c8f493b62e95769eb8c858c126f24db6c40dfe520f2ac0",
+        "dag_metrics.json": "2ab311c71bacb2c8b769ce261c7e2afaa1da43b7660f2dc804e7970711c31757"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "low",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/low/b10/seed7",
+      "sha256": {
+        "run_manifest.json": "13b3a2cade764f20302824fc9f88f59548271d9c44591b481adb78304028c5f9",
+        "dag_metrics.json": "e1388946c588bf0a1a50f9be872561cfd3061afc102fc1479733ca3520b7ea59"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "low",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/low/b12/seed7",
+      "sha256": {
+        "run_manifest.json": "8b5f31c3d86c428d81cd689f78e822654177eb40a572ce74b094ba3caaa1c761",
+        "dag_metrics.json": "83cce7f7b77fce4ca3c22266f59ff8719162ba6ae3f2a2875090bf8f23040cb4"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "low",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/low/b14/seed7",
+      "sha256": {
+        "run_manifest.json": "9a8f126009b4ca83bf079a1b402dca5eaafafa9e7fb6a60cae3ceba7d29b134c",
+        "dag_metrics.json": "44f61a74305123e9c8891672ce6148285ab714a1b2670030870b8aaa5fdc70b9"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "low",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/low/b16/seed7",
+      "sha256": {
+        "run_manifest.json": "e675658c9cf9b7864e1e8e707643a7d4be11fb58564221321e08c717677f473a",
+        "dag_metrics.json": "1b972cb9f359ce972947a1049a354c88ca5be0ca98a287416fb98b9f35c0b22b"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "low",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/low/b18/seed7",
+      "sha256": {
+        "run_manifest.json": "5b09e9d78f020c469918734035da5f2f3e1976f8c8deabae946ae29210eb2bdb",
+        "dag_metrics.json": "d2f0588eecf548d719ccaec85b3b115d2fd482e9cbc5f606f358e94775690d71"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "low",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/low/b20/seed7",
+      "sha256": {
+        "run_manifest.json": "d825a0350d6461c5a7863d8c40f8cfc730eee18ddf0b81f5228b558c5703993e",
+        "dag_metrics.json": "b905bac3a1abbb97bf7022fea693b7c8e9be8ef335ca21926ee74fb6bd929a9d"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "low",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/medium/b2/seed7",
+      "sha256": {
+        "run_manifest.json": "ab3cc896dbe184b84d96ac3bc3122685531e12de8625f758d5291efcf089f683",
+        "dag_metrics.json": "4f7394d5166a172e79f5df9b49f3ef0203c6e40b4c66f7e8128cea634b62559f"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "medium",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/medium/b4/seed7",
+      "sha256": {
+        "run_manifest.json": "6325d345627d6853fc661615998eb7bd4c94fc812ab34c0341399a37a513fed6",
+        "dag_metrics.json": "53c9777a5f25da6beba76e6011d181a25d2d37fff1e276ffbc1c02b7542dd7af"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "medium",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/medium/b6/seed7",
+      "sha256": {
+        "run_manifest.json": "bd2450106c3166fc14be93cd2d514959dd7418daf12ea478589ce68da1709f5e",
+        "dag_metrics.json": "60596f744bc8020e8f15966c84422b660ef179617f4a242c4959859f0d5fc5fa"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "medium",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/medium/b8/seed7",
+      "sha256": {
+        "run_manifest.json": "d4066132e23102970678de4b141868691664ee2acd9ead217d2eac790b0e4570",
+        "dag_metrics.json": "68cd0a61acc78bee7805fc16d4da5c699bfbc5785accab8774beacf23768179c"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "medium",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/medium/b10/seed7",
+      "sha256": {
+        "run_manifest.json": "4f74c8f7e6b0f2a8410d87a1d0870eac406ce5ece44af0aef2488747c6fd515d",
+        "dag_metrics.json": "9bea83048c18eea676ee0adbeed1074b35fe84c03ab7c0b22f933b0b38047009"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "medium",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/medium/b12/seed7",
+      "sha256": {
+        "run_manifest.json": "10c0b6591ccd0ae297ccd9ec004e574ef146b945f57d2ea2935a6d6be90cf77e",
+        "dag_metrics.json": "a38681502f707cc0ce27a698aba9ea7e7be21e7aad10776e49841f9769be41dd"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "medium",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/medium/b14/seed7",
+      "sha256": {
+        "run_manifest.json": "bf64886f4053cbe3a8985f759b45292b6d93ad24c547cb9bfae5587374d0c540",
+        "dag_metrics.json": "0b282362a889e4f08fe85f1aa026fc14df033ebb681cf834fbd8faaf97255b1e"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "medium",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/medium/b16/seed7",
+      "sha256": {
+        "run_manifest.json": "49650dc75a6a56df640cdde0d8029cccd27b25c77b14647c7ee48b22de5be7a3",
+        "dag_metrics.json": "29daaa09acdf0002645bfd2c173f34df2e76c83bf2b0d7158355ffb16ecbaf36"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "medium",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/medium/b18/seed7",
+      "sha256": {
+        "run_manifest.json": "463478d88eb6b83486e11a6d070ef39227f88ba2358489d49be617667162ab37",
+        "dag_metrics.json": "2c0b6090ddd8c3c020b8d2cb472e52cad0c0a29cc0d807dce2fd54b4729aa1f3"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "medium",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/medium/b20/seed7",
+      "sha256": {
+        "run_manifest.json": "6322149cd6199201e12b6ce6964a04b4ee29baa4f6fd8e1301c134fe9401c2da",
+        "dag_metrics.json": "455bde98e57ed68108bda80ad644aa7d5139c153c86098f77a3a7b3ae77eda8d"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "medium",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/high/b2/seed7",
+      "sha256": {
+        "run_manifest.json": "e0ecf8cbb7c3da29979e4b02cfb9cae38f0791ab4d329aac14924c9186edce5a",
+        "dag_metrics.json": "c87efdd9919c233ebf33f0df4672aaf4c9f6bff3a07245cd443d0680c26c2abb"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "high",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/high/b4/seed7",
+      "sha256": {
+        "run_manifest.json": "55a6593cd12dcdfd1dbb6d73e1b677eaae2dea4c7efde49f2c1ae9014ec9145c",
+        "dag_metrics.json": "0c01db1f9ba61f2310d613c4cbb1478cf94d20f32661150c67789368027dabaa"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "high",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/high/b6/seed7",
+      "sha256": {
+        "run_manifest.json": "66a3cb5a583dc65976d0f3557aaa17f00adaf0531a222c31e6efc74fc678d720",
+        "dag_metrics.json": "595219875760d648787159bb1fa703bd70d436ed44fa772cb15490e3cfdc8c80"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "high",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/high/b8/seed7",
+      "sha256": {
+        "run_manifest.json": "7b990cf7d346c0772df2beea7adbb168db5bec0ac4aa26a5ae2531a9b227084a",
+        "dag_metrics.json": "36fc8ac91c211e88aef8165878fd98897c282ac15ccce0098e52f406218d6723"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "high",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/high/b10/seed7",
+      "sha256": {
+        "run_manifest.json": "768f7b7930e1af6214529abcd3ed3dfeb5c81c4a323d9a5a5870bf9b4954756a",
+        "dag_metrics.json": "5afcd508b034cee985c37b0e2fcaea3a3a6540c80d8c0454c7e501f21a067ce5"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "high",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/high/b12/seed7",
+      "sha256": {
+        "run_manifest.json": "eb5d5aaf703c0518e243587d7d80d11c70803597f39605e88010f4848dc17a21",
+        "dag_metrics.json": "8279af3f31b5f93981ce093b8a99e949da8039e412f4184000835b949269471d"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "high",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/high/b14/seed7",
+      "sha256": {
+        "run_manifest.json": "71caa108b989e3d6ad4264001f0bd2b906b0b513becc0df768d4eaaa69076cef",
+        "dag_metrics.json": "643028ebd9b94399f6f8ca4abdb3641e6adb3e621a38240b49bf748e8fb0d894"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "high",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/high/b16/seed7",
+      "sha256": {
+        "run_manifest.json": "5b25a27835c789949921c0216ee44b11bee479220c8cdcf5a8e88b352a8bdecc",
+        "dag_metrics.json": "35586f6c1734605b9b4349dd188db97ed90c02d65a56d9bda98323c82fc54c8d"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "high",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/high/b18/seed7",
+      "sha256": {
+        "run_manifest.json": "f55ee16cdd6b59dab130b6c606921f65e8ea6f260a1247561af4a13abe537ce3",
+        "dag_metrics.json": "adce67119431de0b81636ace36efc6bedc1b1aa9691d3b58c96b100ce3ab35ee"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "high",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "blocksize/DAG/AdHocNetwork/high/b20/seed7",
+      "sha256": {
+        "run_manifest.json": "dd09e4e277bc173c4722632db52921086425ab71fa6c0f66e63a0533a69d656b",
+        "dag_metrics.json": "48b38a76281e55f3d30b6863858ea6a36dc44b86371595b6f87e203e20eefb90"
+      },
+      "network": {
+        "ave_degree": 3.0,
+        "bandwidth_max": 100.0,
+        "comm_range": 30.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 5.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "high",
+        "region_width": 100.0,
+        "segment_size": 0.5,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    }
+  ],
+  "source_results_root": "Results/honest_cli_run01",
+  "source_observations_sha256": "63d046783193ddf9e383aa80b44eb619d03e64fd6d5a997d6713e10e29e8f42a"
+}

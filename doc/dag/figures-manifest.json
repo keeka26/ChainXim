@@ -1,0 +1,322 @@
+{
+  "schema_version": "chainxim_dag_simulation_figures_v1",
+  "source_results_root": "Results/honest_cli_run01",
+  "updated_date": "2026-10-24",
+  "unique_simulation_points": 176,
+  "simulation_rerun": false,
+  "input_files_verified": 524,
+  "appended_bitcoin_statistics": [
+    {
+      "path": "miners/Bitcoin/LockstepNetwork/n5/seed7",
+      "sections": 3,
+      "selection": "last complete section; latest run.log cross-check"
+    },
+    {
+      "path": "miners/Bitcoin/LockstepNetwork/n10/seed7",
+      "sections": 3,
+      "selection": "last complete section; latest run.log cross-check"
+    },
+    {
+      "path": "miners/Bitcoin/LockstepNetwork/n15/seed7",
+      "sections": 3,
+      "selection": "last complete section; latest run.log cross-check"
+    },
+    {
+      "path": "miners/Bitcoin/LockstepNetwork/n20/seed7",
+      "sections": 3,
+      "selection": "last complete section; latest run.log cross-check"
+    },
+    {
+      "path": "miners/Bitcoin/LockstepNetwork/n25/seed7",
+      "sections": 3,
+      "selection": "last complete section; latest run.log cross-check"
+    },
+    {
+      "path": "miners/Bitcoin/LockstepNetwork/n30/seed7",
+      "sections": 3,
+      "selection": "last complete section; latest run.log cross-check"
+    },
+    {
+      "path": "miners/Bitcoin/LockstepNetwork/n35/seed7",
+      "sections": 3,
+      "selection": "last complete section; latest run.log cross-check"
+    },
+    {
+      "path": "miners/Bitcoin/LockstepNetwork/n40/seed7",
+      "sections": 2,
+      "selection": "last complete section; latest run.log cross-check"
+    }
+  ],
+  "plot_script_sha256": "b7653f9c1e7073c8aa7d4c92ba9c9a9ed9f143ae5022b6ad11188d943c68a84b",
+  "definitions": {
+    "G_B": "Bitcoin generated non-genesis blocks",
+    "M_B": "Bitcoin unchanged native num_of_valid_blocks",
+    "G_D": "DAG generated non-genesis blocks; eventual-inclusion proxy, not realized network throughput",
+    "L_D": "DAG all-node order longest common prefix, excluding genesis",
+    "T": "actual mining rounds",
+    "B": "nominal MB per block"
+  },
+  "cases": [
+    {
+      "case": "miners",
+      "observed_points": 80,
+      "grid": {
+        "schema_version": "chainxim_honest_analysis_grid_v1",
+        "fixed": {
+          "rounds": 3000,
+          "miners": 5,
+          "q": 5,
+          "difficulty": 8,
+          "blocksize": 1.0
+        },
+        "axes": {
+          "miners": [
+            5,
+            10,
+            15,
+            20,
+            25,
+            30,
+            35,
+            40
+          ],
+          "hashrate": [
+            5
+          ],
+          "difficulty": [
+            8
+          ],
+          "blocksize": [
+            1.0
+          ]
+        },
+        "networks": [
+          "LockstepNetwork",
+          "DeterPropNetwork",
+          "StochPropNetwork",
+          "TopologyNetwork",
+          "AdHocNetwork"
+        ],
+        "seeds": [
+          7
+        ],
+        "losses": [
+          "low",
+          "medium",
+          "high"
+        ]
+      },
+      "throughput": "both",
+      "figures": [
+        "miners/miners_throughput_comparison_blocks.png"
+      ],
+      "data": "miners/observations.csv",
+      "audit": "miners/plot_audit.json"
+    },
+    {
+      "case": "hashrate",
+      "observed_points": 20,
+      "grid": {
+        "schema_version": "chainxim_honest_analysis_grid_v1",
+        "fixed": {
+          "rounds": 30000,
+          "miners": 10,
+          "q": 5,
+          "difficulty": 8,
+          "blocksize": 1.0
+        },
+        "axes": {
+          "miners": [
+            10
+          ],
+          "hashrate": [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20
+          ],
+          "difficulty": [
+            8
+          ],
+          "blocksize": [
+            1.0
+          ]
+        },
+        "networks": [
+          "LockstepNetwork",
+          "DeterPropNetwork",
+          "StochPropNetwork",
+          "TopologyNetwork",
+          "AdHocNetwork"
+        ],
+        "seeds": [
+          7
+        ],
+        "losses": [
+          "low",
+          "medium",
+          "high"
+        ]
+      },
+      "throughput": "both",
+      "figures": [
+        "hashrate/hashrate_throughput_comparison_blocks.png"
+      ],
+      "data": "hashrate/observations.csv",
+      "audit": "hashrate/plot_audit.json"
+    },
+    {
+      "case": "difficulty",
+      "observed_points": 16,
+      "grid": {
+        "schema_version": "chainxim_honest_analysis_grid_v1",
+        "fixed": {
+          "rounds": 3000,
+          "miners": 6,
+          "q": 5,
+          "difficulty": 8,
+          "blocksize": 1.0
+        },
+        "axes": {
+          "miners": [
+            6
+          ],
+          "hashrate": [
+            5
+          ],
+          "difficulty": [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          "blocksize": [
+            1.0
+          ]
+        },
+        "networks": [
+          "LockstepNetwork",
+          "DeterPropNetwork",
+          "StochPropNetwork",
+          "TopologyNetwork",
+          "AdHocNetwork"
+        ],
+        "seeds": [
+          7
+        ],
+        "losses": [
+          "low",
+          "medium",
+          "high"
+        ]
+      },
+      "throughput": "both",
+      "figures": [
+        "difficulty/difficulty_throughput_comparison_blocks.png"
+      ],
+      "data": "difficulty/observations.csv",
+      "audit": "difficulty/plot_audit.json"
+    },
+    {
+      "case": "blocksize",
+      "observed_points": 60,
+      "grid": {
+        "schema_version": "chainxim_honest_analysis_grid_v1",
+        "fixed": {
+          "rounds": 10000,
+          "miners": 10,
+          "q": 5,
+          "difficulty": 8,
+          "blocksize": 2.0
+        },
+        "axes": {
+          "miners": [
+            10
+          ],
+          "hashrate": [
+            5
+          ],
+          "difficulty": [
+            8
+          ],
+          "blocksize": [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20
+          ]
+        },
+        "networks": [
+          "LockstepNetwork",
+          "DeterPropNetwork",
+          "StochPropNetwork",
+          "TopologyNetwork",
+          "AdHocNetwork"
+        ],
+        "seeds": [
+          7
+        ],
+        "losses": [
+          "low",
+          "medium",
+          "high"
+        ]
+      },
+      "throughput": "eventual",
+      "figures": [
+        "blocksize/blocksize_eventual_throughput_MB.png"
+      ],
+      "data": "blocksize/observations.csv",
+      "audit": "blocksize/plot_audit.json"
+    },
+    {
+      "case": "dag",
+      "observed_points": 40,
+      "reuses": "miners DAG observations",
+      "figures": [
+        "dag/dag_features.png",
+        "dag/dag_trace.png"
+      ],
+      "data": "dag/observations.csv",
+      "audit": "dag/plot_audit.json"
+    }
+  ],
+  "artifact_sha256": {
+    "blocksize/blocksize_eventual_throughput_MB.png": "06b36a0f3072a829d9492f06a46fa27ee4546fa3290589e89e17c5bf91f32fb1",
+    "blocksize/observations.csv": "63d046783193ddf9e383aa80b44eb619d03e64fd6d5a997d6713e10e29e8f42a",
+    "blocksize/plot_audit.json": "6e8679240ee891ede445a45e3d4ef8c4b70f1f27f92ddf6d3fe84048c10bd7ef",
+    "dag/dag_features.png": "6c51796b8794d99399cea9d66512608bf8b355415c864d40c400ee3ba5a0cf75",
+    "dag/dag_trace.png": "2438ed17d071ff4f7f460e5d1dcc2831eb3702b7ba20b16f16f297ded8a0347e",
+    "dag/observations.csv": "82acbc1446f224d67bcfb787ae95035662f2a7a567fbf5b9557cc4b7f3601693",
+    "dag/plot_audit.json": "5244ef8613827fd8566a2923368f6b672acdcb1151fc6b49420469e32ce43a32",
+    "dag/trace_epoch_sizes.csv": "3f05c8306a287590b83ae66d0a1b9f256ebbd4e1c12c79943627e4a22779c7ec",
+    "dag/trace_reference_counts.csv": "7b098d96379c2e5cb8db6399fdce9696cd950e29097c5d64dfaf456fa7f030f0",
+    "dag/trace_round_end.csv": "01f1351a9219154d9cded0f514d5064317b41c57ad312d3a477e20d7e3cdddf6",
+    "dag/trace_summary.json": "d37f945202cb901a0acd8f0cba46194f0bbb39a2b705ab6c23350f3e3ef27556",
+    "difficulty/difficulty_throughput_comparison_blocks.png": "74a360e81b3f075f690ac73d4c621829b536674d618b6638e56385e18e72c23b",
+    "difficulty/observations.csv": "c406068d3532ad532aa5e27b309d3d3c60f56fcd781d03864575179b0289a5ce",
+    "difficulty/plot_audit.json": "78ac97384f71f1e36500b6c88d96031eb9c1ccb6efe9bb39c0a232b792014f9d",
+    "hashrate/hashrate_throughput_comparison_blocks.png": "2498395ce5555e75da7c38c833a072d3c5f8498ba060bd2b38f0097a56443911",
+    "hashrate/observations.csv": "a44f9faf82a974462439d3b11cdb6aa1f2798c595f81c664999a87a8eef19f1b",
+    "hashrate/plot_audit.json": "1e497bae29d17ac0570bcfa2f69f16460f640b73befcfa5eff62d346a5f7873a",
+    "miners/miners_throughput_comparison_blocks.png": "896365233fe3ef18d148e01b8d845107eb9cf42eb522804f3e710159df56d614",
+    "miners/observations.csv": "0bb2b1a5122402439bbf46b962b8ccb254509850859d3490cd5510059f16aaa0",
+    "miners/plot_audit.json": "cf3cc172598bed9ab35af2f8692dc3938343d87cae649a8156aaa69462605aac"
+  }
+}

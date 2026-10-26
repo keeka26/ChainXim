@@ -14,8 +14,11 @@ class PoW(Consensus):
         '''适用于PoW共识协议的区块头'''
         __slots__ = ['target', 'nonce']
         def __init__(self, preblock: Consensus.Block = None, timestamp=0, content=b'', miner_id=-1,
-                     target = (2**(8*HASH_LEN) - 1).to_bytes(HASH_LEN, BYTE_ORDER), nonce = 0):
-            super().__init__(preblock, timestamp, content, miner_id)
+                     target = (2**(8*HASH_LEN) - 1).to_bytes(HASH_LEN, BYTE_ORDER), nonce = 0,
+                     *, header_version=1, refhashes=(), prehash=None):  # 
+            # 同一原生头类型承载可选v2字段，默认仍为v1。
+            super().__init__(preblock, timestamp, content, miner_id,
+                             header_version=header_version, refhashes=refhashes, prehash=prehash)
             self.target = target  # 难度目标
             self.nonce = nonce  # 随机数
 
@@ -23,6 +26,15 @@ class PoW(Consensus):
             return super().__eq__(value) and self.target == value.target and self.nonce == value.nonce
 
         def calculate_blockhash(self) -> bytes:
+            # 仅v2使用完整承诺；以下v1字节公式完全保留。
+            if isinstance(self.header_version, bool) or not isinstance(self.header_version, int) or self.header_version not in (1, 2):
+                raise ValueError('header_version must be 1 or 2')
+            if self.header_version == 2:
+                from .conflux_codec import calculate_header_hash
+                return calculate_header_hash(self)
+            # 被修改的v1头也不能带未承诺引用。
+            if self.refhashes:
+                raise ValueError('refhashes must be empty for header_version=1')
             data = self.miner.to_bytes(INT_LEN, BYTE_ORDER, signed=True)+ \
                     self.content+ self.prehash + \
                     self.nonce.to_bytes(INT_LEN, BYTE_ORDER)
@@ -132,6 +144,11 @@ class PoW(Consensus):
         return:
             block_vali 合法标识 type:bool
         '''
+        # 旧PoW接收路径仅接受v1，防止跨协议消息混入旧单链。
+        # True/1.0与1数值相等，须在计算hash前严格拒绝。
+        version = block.blockhead.header_version
+        if isinstance(version, bool) or not isinstance(version, int) or version != 1 or block.blockhead.refhashes:
+            return False
         btemp = block
         target = btemp.blockhead.target
         hash = btemp.calculate_blockhash()

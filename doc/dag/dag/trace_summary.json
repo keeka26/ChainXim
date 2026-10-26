@@ -1,0 +1,45 @@
+{
+  "reference_miner_id": 0,
+  "total_round": 3000,
+  "generated": 2363,
+  "accepted": 2360,
+  "ordered": 2358,
+  "confirmed": 2352,
+  "pivot_height": 606,
+  "max_dag_rank": 638,
+  "tips": 3,
+  "reference_count": 5349,
+  "unassigned_epoch_blocks": 2,
+  "wire_propagation": {
+    "completed": 92061,
+    "excluded": 2363,
+    "mean_rounds": 4.613245565440306,
+    "unfinished": 96
+  },
+  "accepted_propagation": {
+    "completed": 92057,
+    "excluded": 2363,
+    "mean_rounds": 4.989180616357257,
+    "unfinished": 100
+  },
+  "network_queue_packets": 5,
+  "unfinished_network_packets": 5,
+  "pending": 0,
+  "max_epoch_size": 12,
+  "mean_epoch_size": 3.891089108910891,
+  "local_graphs_equal": false,
+  "local_views_equal": false,
+  "common_order_blocks": 2351,
+  "source_result": "miners/DAG/DeterPropNetwork/n40/seed7",
+  "reference_distribution": {
+    "0": 183,
+    "1": 500,
+    "2": 756,
+    "3": 523,
+    "4": 263,
+    "5": 99,
+    "6": 32,
+    "7": 3,
+    "8": 1
+  }
+}

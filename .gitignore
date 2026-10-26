@@ -9,7 +9,7 @@
 /Result_Data/
 /block/
 /pyproject.toml
-
+/docs/
 **/__pycache__
 
 .classpath
@@ -54,3 +54,7 @@ Thumbs.db
 /.mvn/
 /mvnw.cmd
 /mvnw
+
+# Local DAG development artifacts
+/stage_reports/
+/tests/

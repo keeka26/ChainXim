@@ -1,5 +1,6 @@
 import copy
 import logging
+import heapq  # 恢复时确定性拓扑遍历
 from collections import defaultdict
 
 import graphviz
@@ -8,9 +9,66 @@ import matplotlib.pyplot as plt
 import global_var
 
 from .block import Block
+from .dag_events import ConfluxView, ProtocolDelta  # 只读投影
 from functions import INT_LEN, BYTE_ORDER
 
 logger = logging.getLogger(__name__)
+
+
+# 图验证只计算临时索引，不在检查失败时改写本地图。
+def _dag_structure(blocks, head_hash, last_hash):
+    """由已承诺的头重建全边/树边和深度，拒绝缺父、混合根及循环。
+
+    用于可信本地DAG的复制/恢复，不是PoW验证或网络反序列化。
+    返回的索引为新对象；所有检查通过后调用方才安装邻接。
+    """
+    from consensus.conflux_codec import validate_block_header
+    if not isinstance(blocks, dict) or not blocks:
+        raise ValueError('DAG snapshot must contain the fixed genesis')
+    if head_hash not in blocks or last_hash not in blocks:
+        raise ValueError('DAG head and selected tail must be accepted hashes')
+    parents, children, tree_children = {}, {h:set() for h in blocks}, {h:[] for h in blocks}
+    roots=[]
+    for h,block in blocks.items():
+        if not isinstance(block,Block) or h != block.blockhash or not validate_block_header(block):
+            raise ValueError('DAG block key/header/claimed hash is invalid')
+        if block.isGenesis:
+            roots.append(h)
+            dependencies=()
+        else:
+            dependencies=(block.blockhead.prehash,*block.blockhead.refhashes)
+        if any(parent not in blocks for parent in dependencies):
+            raise ValueError('DAG snapshot has missing dependencies')
+        parents[h]=dependencies
+        for parent in dependencies:
+            children[parent].add(h)
+        if dependencies:
+            tree_children[dependencies[0]].append(h)
+    if roots != [head_hash]:
+        raise ValueError('DAG must have exactly its fixed genesis as head')
+    remaining={h:len(deps) for h,deps in parents.items()}
+    ready=[h for h,count in remaining.items() if count==0]
+    heapq.heapify(ready)
+    heights, ranks = {}, {}
+    while ready:
+        h=heapq.heappop(ready)
+        deps=parents[h]
+        height=heights[deps[0]]+1 if deps else 0
+        rank=max(ranks[parent] for parent in deps)+1 if deps else 0
+        block=blocks[h]
+        if type(block.height) is not int or block.height!=height or type(block.dag_rank) is not int or block.dag_rank!=rank:
+            raise ValueError('DAG snapshot height/rank disagrees with dependencies')
+        heights[h],ranks[h]=height,rank
+        for child in children[h]:
+            remaining[child]-=1
+            if remaining[child]==0:
+                heapq.heappush(ready,child)
+    if len(heights)!=len(blocks):
+        raise ValueError('DAG snapshot contains a dependency cycle')
+    for values in tree_children.values():
+        values.sort()
+    tips={h for h,values in children.items() if not values}
+    return parents,children,tree_children,tips
 
 class Chain(object):
 
@@ -22,12 +80,22 @@ class Chain(object):
         self.switch_tracker_callback = None # 用于记录链尾切换事件
         # self.merge_tracker_callback = None # 用于记录区块并入事件
         self.merge_callback = None # 用于在Environment处理区块并入事件
+        self._init_dag_indexes()  # 默认仍为旧单链
         '''
         默认的共识机制中会对chain添加一个创世区块
         默认情况下chain不可能为空
         '''
 
     def __getstate__(self):
+        # DAG快照只存块本身和hash角色，索引恢复时重建。
+        if self._dag_mode:
+            self._inspect_dag()
+            self._check_protocol_projection()  # 检查已安装历史投影
+            return {'miner_id':self.miner_id,'_dag_mode':True,'_dag_snapshot_version':1,
+                    'head':self.head.blockhash,'last_block':self.last_block.blockhash,
+                    'protocol_view':self.protocol_view,  # delta通知不重放
+                    'block_set':{h:copy.deepcopy(block) for h,block in self.block_set.items()},
+                    'switch_tracker_callback':None,'merge_callback':None}
         chain = copy.deepcopy(self)
         for block in chain.block_set.values():
             block.parentblock = None
@@ -38,7 +106,21 @@ class Chain(object):
         return vars(chain)
 
     def __setstate__(self, state):
+        # 完整检查临时Chain后安装，失败不替换已有对象。
+        if state.get('_dag_mode',False) is True:
+            if type(state.get('_dag_snapshot_version')) is not int or state['_dag_snapshot_version']!=1:
+                raise ValueError('unsupported DAG snapshot version')
+            temporary=Chain(state.get('miner_id'))
+            temporary._install_dag(state['block_set'],state['head'],state['last_block'])
+            temporary._restore_protocol_view(state.get('protocol_view'))  # 兼容无协议view的旧快照
+            self.__dict__.clear()
+            self.__dict__.update(temporary.__dict__)
+            return
+        # v2快照不得伪装旧格式绕过全边恢复。
+        if state.get('_dag_mode',False) is not False or any(getattr(block.blockhead,'header_version',1)!=1 for block in state['block_set'].values()):
+            raise ValueError('DAG blocks cannot use legacy snapshot restore')
         self.__dict__.update(state)
+        self._init_dag_indexes()  # 旧快照缺新增字段时补默认值
         for block in self.block_set.values():
             if block.height != 0:
                 block.parentblock = self.block_set[block.blockhead.prehash]
@@ -46,6 +128,16 @@ class Chain(object):
         self.last_block = self.block_set[self.last_block]
 
     def __deepcopy__(self, memo):
+        # 第一遍每hash复制一次，第二遍连接本地树邻接。
+        if self._dag_mode:
+            self._inspect_dag()
+            copy_chain=Chain(self.miner_id)
+            memo[id(self)]=copy_chain
+            blocks={h:copy.deepcopy(block,memo) for h,block in self.block_set.items()}
+            copy_chain._install_dag(blocks,self.head.blockhash,self.last_block.blockhash)
+            self._check_protocol_projection()  # 
+            copy_chain._restore_protocol_view(self.protocol_view)  # 
+            return copy_chain
         if self.head is None:
             return None
         copy_chain = Chain(miner_id=self.miner_id)
@@ -70,6 +162,228 @@ class Chain(object):
             q_o.pop(0)
         return copy_chain
     
+    # 原生Chain的DAG存储区；不选pivot、不执行PoW。
+    def _init_dag_indexes(self):
+        """默认旧模式；全边索引与tips仅由DAG接纳维护。"""
+        self._dag_mode=False
+        self.parents_by_hash={}
+        self.children_by_hash={}
+        self._dag_tips=set()
+        # 最近协议边界的只读缓存；存储接纳不自动选尾。
+        self.protocol_view:ConfluxView|None=None
+        self.last_protocol_delta:ProtocolDelta|None=None
+
+    def _require_dag(self):
+        """空Chain可查询空tips，非空旧链不能冒充有全边索引的DAG。"""
+        if self.block_set and not self._dag_mode:
+            raise ValueError('DAG queries require a native v2 DAG chain')
+
+    def _inspect_dag(self):
+        """验证头、闭合和本地缓存/邻接一致，拒绝损坏图被复制或导出。"""
+        if self.head is None or self.last_block is None:
+            raise ValueError('DAG head and selected tail are required')
+        indexes=_dag_structure(self.block_set,self.head.blockhash,self.last_block.blockhash)
+        parents,children,tree_children,tips=indexes
+        if self.head is not self.block_set[self.head.blockhash] or self.last_block is not self.block_set[self.last_block.blockhash]:
+            raise ValueError('DAG head/tail must refer to canonical local objects')
+        if self.parents_by_hash!=parents or self.children_by_hash!=children or self._dag_tips!=tips:
+            raise ValueError('DAG full-edge indexes disagree with block headers')
+        for h,block in self.block_set.items():
+            parent=self.block_set[parents[h][0]] if parents[h] else None
+            if block.parentblock is not parent:
+                raise ValueError('DAG local main parent is inconsistent')
+            expected=[self.block_set[child] for child in tree_children[h]]
+            if len(block.next)!=len(expected) or any(a is not b for a,b in zip(block.next,expected)):
+                raise ValueError('DAG local tree children contain extra/missing/cyclic links')
+        return indexes
+
+    def _install_dag(self, blocks, head_hash, last_hash):
+        """全部验证成功后重建本地树对象连接，引用边始终仅在hash索引中。"""
+        parents,children,tree_children,tips=_dag_structure(blocks,head_hash,last_hash)
+        for h,block in blocks.items():
+            block.parentblock=blocks[parents[h][0]] if parents[h] else None
+            block.next=[blocks[child] for child in tree_children[h]]
+        self.block_set=blocks
+        self.head=blocks[head_hash]
+        self.last_block=blocks[last_hash]
+        self.parents_by_hash=parents
+        self.children_by_hash=children
+        self._dag_tips=tips
+        self._dag_mode=True
+        # DAG性能优化：恢复/复制后的图必须重新计算当前规范view，历史view不作缓存。
+        self._dag_canonical_view=None
+        self._dag_steady_delta=None
+        # DAG增量优化：恢复只重建接纳日志/rank，协议权重及投影缓存延迟重建。
+        self._dag_view_cache=None
+        self._dag_accepted_hashes=list(blocks)
+        self._dag_max_rank=max(block.dag_rank for block in blocks.values())
+
+    # 协议投影安装区，不替代唯一block_set。
+    def _check_protocol_projection(self):
+        """可信复制/导出核查最近view，允许接纳批处理中暂未重算的历史选择。"""
+        if self.protocol_view is not None:
+            from consensus.conflux_protocol import validate_view
+            validate_view(self,self.protocol_view,current=False)
+            if self.last_block.blockhash!=self.protocol_view.pivot[-1]:
+                raise ValueError('installed view and selected tail disagree')
+
+    def _restore_protocol_view(self,view:ConfluxView|None):
+        """恢复派生历史view，不重复发出撤销/应用通知；无协议view的旧快照默认为None。"""
+        if view is None:
+            return
+        from consensus.conflux_protocol import validate_view
+        validate_view(self,view,current=False)
+        if self.last_block.blockhash!=view.pivot[-1]:
+            raise ValueError('snapshot view and selected tail disagree')
+        self.protocol_view=view
+        self.last_protocol_delta=ProtocolDelta.between(view.order,view.order)
+
+    def set_protocol_view(self,view:ConfluxView)->ProtocolDelta:
+        """先核对当前规范view，再原子安装尾/order/LCP delta。
+
+        旧后缀必须先撤销，新后缀再重放；added可能包含过去已排序的块。
+        仅尾hash真正改变时调用原switch回调；回调异常在安装提交后传播。
+        """
+        from consensus.conflux_protocol import validate_view
+        validate_view(self,view)
+        # 公共安装入口仍完整验证；缓存仅在DAG对象上创建，不进入旧单链状态。
+        self._dag_canonical_view=view
+        # 公共安装已独立验证；避免把更早的增量缓存误用为其前缀证明。
+        self._dag_view_cache=None
+        return self._apply_protocol_view(view)
+
+    def _refresh_protocol_view(self)->ProtocolDelta:
+        """DAG性能优化：同一accepted图复用不可变规范view，仍安装本次空差量。
+
+        合法拓扑变更只能经add_dag_block或_install_dag，两者都会使缓存失效。
+        新块及恢复由接纳层完整验证；已接纳块的协议头/邻接不得由调用者原地改写。
+        公共安装、复制/恢复和最终校验各自保留完整检查，不依赖此运行时缓存。
+        """
+        view=getattr(self,'_dag_canonical_view',None)
+        if view is None:
+            from consensus.conflux_protocol import _compute_accepted_view
+            view=_compute_accepted_view(self)
+            self._dag_canonical_view=view
+        return self._apply_protocol_view(view)
+
+    def _apply_protocol_view(self,view:ConfluxView)->ProtocolDelta:
+        """只由已校验/计算的内部路径调用；不重复计算刚刚得到的规范结果。"""
+        old_order=self.protocol_view.order if self.protocol_view is not None else ()
+        # 不变的view是冻结对象；空差量可复用，避免逐轮反复校验整条相同序列。
+        if view is self.protocol_view:
+            delta=getattr(self,'_dag_steady_delta',None)
+            if delta is None:
+                # 相同冻结view已证明整序相同，首次空差量也无需扫描历史。
+                delta=ProtocolDelta._from_shared_prefix(old_order,view.order,len(old_order))
+                self._dag_steady_delta=delta
+        else:
+            # DAG增量优化：只有缓存的旧/新view对象均吻合，才接受共享前缀证明。
+            cache=getattr(self,'_dag_view_cache',None)
+            if cache is not None and cache.previous_view is self.protocol_view and cache.view is view:
+                delta=ProtocolDelta._from_shared_prefix(old_order,view.order,cache.common_order_length)
+            else:
+                delta=ProtocolDelta.between(old_order,view.order)
+            self._dag_steady_delta=None
+        tail=self.block_set[view.pivot[-1]]
+        changed=self.last_block is not tail
+        self.protocol_view,self.last_protocol_delta,self.last_block=view,delta,tail
+        if changed and self.switch_tracker_callback:
+            self.switch_tracker_callback(tail)
+        return delta
+
+    def get_total_order(self)->tuple[Block,...]:
+        """返回最近安装order的原生本地对象；未安装返回空，不自动计算。"""
+        self._require_dag()
+        return tuple(self.block_set[h] for h in self.protocol_view.order) if self.protocol_view else ()
+
+    def get_parent_hashes(self, blockhash: bytes) -> tuple[bytes,...]:
+        """返回主父在前、规范引用在后的全依赖；创世为空，未知hash抛KeyError。"""
+        self._require_dag()
+        return self.parents_by_hash[blockhash]
+
+    def get_main_children(self, blockhash: bytes) -> tuple[Block,...]:
+        """仅树子，按hash排序返回本地对象；引用子不混入next。"""
+        self._require_dag()
+        block=self.block_set[blockhash]
+        return tuple(sorted(block.next,key=lambda value:value.blockhash))
+
+    def get_tips(self) -> tuple[Block,...]:
+        """无任何已接纳子（树边/引用边均计）的块；pending不在Chain。"""
+        self._require_dag()
+        return tuple(self.block_set[h] for h in sorted(self._dag_tips))
+
+    def get_past(self, blockhash: bytes, include_self: bool = True) -> frozenset[bytes]:
+        """迭代沿全父边查询祖先闭包；visited使钻石共享祖先只访问一次。"""
+        self._require_dag()
+        if blockhash not in self.block_set:
+            raise KeyError(blockhash)
+        visited=set()
+        stack=[blockhash]
+        while stack:
+            h=stack.pop()
+            if h in visited:
+                continue
+            visited.add(h)
+            stack.extend(self.parents_by_hash[h])
+        if not include_self:
+            visited.remove(blockhash)
+        return frozenset(visited)
+
+    def add_dag_block(self, block: Block, *, deepcopy: bool = True) -> tuple[Block,bool]:
+        """原子/幂等接纳v2块；先验证身份和全父，再计算/核查height/rank。
+
+        不执行PoW或诚实选父规则：resolver/共识先做静态与PoW回调。
+        缺父或非法输入抛ValueError，失败不改图或调用者。deepcopy=False转移对象所有权。
+        成功merge_callback看到完整索引；回调异常在存储提交后向调用者传播。
+        """
+        from consensus.conflux_codec import validate_block_header
+        if not isinstance(block,Block) or not validate_block_header(block):
+            raise ValueError('invalid Conflux v2 block identity')
+        if self.block_set and not self._dag_mode:
+            raise ValueError('legacy and Conflux blocks cannot share a Chain')
+        dependencies=() if block.isGenesis else (block.blockhead.prehash,*block.blockhead.refhashes)
+        if any(parent not in self.block_set for parent in dependencies):
+            raise ValueError('all valid DAG parents must be accepted before insertion')
+        height=self.block_set[dependencies[0]].height+1 if dependencies else 0
+        rank=max(self.block_set[parent].dag_rank for parent in dependencies)+1 if dependencies else 0
+        for label,want in [('height',height),('dag_rank',rank)]:
+            value=getattr(block,label)
+            if value is not None and (type(value) is not int or value!=want):
+                raise ValueError(f'{label} disagrees with accepted dependencies')
+        if block.blockhash in self.block_set:
+            return self.block_set[block.blockhash],False
+        if block.isGenesis and self.head is not None:
+            raise ValueError('a DAG cannot contain another genesis')
+        local=copy.deepcopy(block) if deepcopy else block
+        local.height,local.dag_rank=height,rank
+        local.parentblock=self.block_set[dependencies[0]] if dependencies else None
+        local.next=[]
+        self.block_set[local.blockhash]=local
+        self.parents_by_hash[local.blockhash]=dependencies
+        self.children_by_hash[local.blockhash]=set()
+        self._dag_tips.add(local.blockhash)
+        for parent in dependencies:
+            self.children_by_hash[parent].add(local.blockhash)
+            self._dag_tips.discard(parent)
+        if dependencies:
+            local.parentblock.next.append(local)
+            local.parentblock.next.sort(key=lambda value:value.blockhash)
+        else:
+            self.head=self.last_block=local
+        self._dag_mode=True
+        # DAG增量优化：只在DAG对象上创建；日志供协议和统计消费，唯一存储仍是block_set。
+        if not hasattr(self,'_dag_accepted_hashes'):
+            self._dag_accepted_hashes=[]
+            self._dag_max_rank=0
+        self._dag_accepted_hashes.append(local.blockhash)
+        self._dag_max_rank=max(self._dag_max_rank,local.dag_rank)
+        # 必须先失效再通知merge回调，回调可能立即读取当前图或继续接纳。
+        self._dag_canonical_view=None
+        self._dag_steady_delta=None
+        if self.merge_callback:
+            self.merge_callback(local)
+        return local,True
+
     def __is_empty(self):
         if self.head is None:
             # print("Chain Is empty")
@@ -96,6 +410,17 @@ class Chain(object):
         return self.last_block
 
     def set_last_block(self,block:Block):
+        # DAG只允许显式选择accepted本地对象，插入不自动选尾。
+        if self._dag_mode:
+            local=self.search_block(block)
+            if local is not None:
+                # 旁路手动换尾清理已安装缓存，避免投影自相矛盾。
+                if self.last_block is not local:
+                    self.protocol_view=self.last_protocol_delta=None
+                self.last_block=local
+                if self.switch_tracker_callback:
+                    self.switch_tracker_callback(local)
+            return
         # 设置本链最深的块
         # 本块必须是在链中的
         if self.search_block(block):
@@ -115,6 +440,11 @@ class Chain(object):
 
     def add_blocks(self, blocks: Block | list[Block], insert_point:Block=None,
                    deepcopy: bool = True, auto_switch: bool = True):
+        # 旧逆序链批次不承担图接纳；v1主体逐句保留。
+        if self._dag_mode:
+            raise ValueError('use add_dag_block for a DAG; legacy chain batches are not graph batches')
+        if blocks and any(getattr(item.blockhead,'header_version',1)!=1 for item in ((blocks,) if isinstance(blocks,Block) else blocks)):
+            raise ValueError('v2 blocks must use add_dag_block')
         if not blocks:
             return
         # 添加区块的功能 (深拷贝*)
@@ -181,6 +511,9 @@ class Chain(object):
         return cur2add
 
     def add_block_forcibly(self, block: Block):
+        # 仅沿主父搬链不能补齐引用依赖，显式拒绝DAG。
+        if self._dag_mode or (block is not None and getattr(block.blockhead,'header_version',1)!=1):
+            raise ValueError('legacy forced insertion cannot repair a DAG')
         # 该功能是强制将该区块加入某条链 一般不被使用与共识中
         # 返回值：深拷贝插入完之后新插入链的块头
         # block 的 last必须不为none
@@ -356,7 +689,9 @@ class Chain(object):
             bins = 20
         plt.rcParams['font.size'] = 16
         plt.rcParams['font.family'] = 'Times New Roman'
-        plt.hist(stat, bins=bins, histtype='bar', range=(0, max(stat)))
+        # 无产块间隔样本时仍保存原格式的空直方图。
+        interval_max = max(stat) if stat else 1
+        plt.hist(stat, bins=bins, histtype='bar', range=(0, interval_max))
         plt.xlabel('Rounds')
         plt.ylabel('Times')
         # plt.title('Block generation interval distribution')
@@ -412,6 +747,9 @@ class Chain(object):
     def CalculateStatistics(self, rounds, honest_miners: list, adver_ids: list[int], confirm_delay: int,
                             dataitem_params: dict, valid_dataitems: set, quantile: float,
                             eclipsed_ids: list = None, chain_switch_events: list = None):
+        # 旧树遍历统计不能静默用于全DAG；旧模式逐句保留。
+        if getattr(self, '_dag_mode', False):
+            raise ValueError('DAG statistics require Environment.view / util.dag_metrics.collect_metrics')
         eclipsed_ids = eclipsed_ids or []
         # 统计一些数据
         stats = {
@@ -578,14 +916,21 @@ class Chain(object):
 
         stats["num_of_stale_blocks"] = stats["num_of_generated_blocks"] - stats["num_of_valid_blocks"]
         stats["average_block_time_main"] = rounds / stats["num_of_valid_blocks"] if stats["num_of_valid_blocks"] > 0 else -1
-        stats["block_throughput_main"] = stats["num_of_valid_blocks"] / rounds
+        # 无运行轮次时保持原数值键，吞吐输出 0。
+        stats["block_throughput_main"] = stats["num_of_valid_blocks"] / rounds if rounds > 0 else 0
         blocksize = global_var.get_blocksize()
         stats["throughput_main_MB"] = blocksize * stats["block_throughput_main"]
-        stats["average_block_time_total"] = rounds / stats["num_of_generated_blocks"]
-        stats["block_throughput_total"] = 1 / stats["average_block_time_total"]
+        # 无区块时平均间隔沿用 main 的 -1 哨兵。
+        # 非空正轮次仍使用原计算公式；0 吞吐是空运行输出约定，不是性能测量。
+        stats["average_block_time_total"] = (rounds / stats["num_of_generated_blocks"]
+                                            if stats["num_of_generated_blocks"] > 0 else -1)
+        stats["block_throughput_total"] = (1 / stats["average_block_time_total"]
+                                           if rounds > 0 and stats["num_of_generated_blocks"] > 0 else 0)
         stats["throughput_total_MB"] = blocksize * stats["block_throughput_total"]
         stats["fork_rate"] = stats["num_of_heights_with_fork"] / stats["num_of_valid_blocks"] if stats["num_of_valid_blocks"] > 0 else 0
-        stats["stale_rate"] = stats["num_of_stale_blocks"] / stats["num_of_generated_blocks"]
+        # 无产块样本时无 stale，保留原键及数值类型。
+        stats["stale_rate"] = (stats["num_of_stale_blocks"] / stats["num_of_generated_blocks"]
+                               if stats["num_of_generated_blocks"] > 0 else 0)
 
         return stats
     
@@ -703,6 +1048,14 @@ class LocalChainTracker(object):
     
     def update_round(self,current_round):
         self.current_round = current_round
+
+    def dump_dag_events(self, filename, chains, settings):
+        """原tracker的DAG输出入口，安全版本化accepted-only格式。
+
+        完整输入边界另存dag_events；旧dump_events的pickle格式和参数完全保留。
+        """
+        from util.dag_replay import write_accepted_dump
+        write_accepted_dump(filename, chains, settings)
 
     def dump_events(self, filename: str, chains: list[Chain] = None,
                     honest_miner_ids: list[int] = None):

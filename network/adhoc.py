@@ -248,6 +248,13 @@ class AdHocNetwork(Network):
             return False
         inv = new_msgs[0]
         getDataReply = new_msgs[1]
+        # 免费控制调用也必须经过真实当前邻接关系。
+        # 已识别的不可达 INV 在此结束，不能落入正文发送或读取远端库存。
+        if self._dag_settings and (not self._graph.has_edge(inv.source, inv.target)
+                or not 0 <= inv.source < self.MINER_NUM or not 0 <= inv.target < self.MINER_NUM
+                or inv.target not in self._miners[inv.source]._NIC._neighbors
+                or inv.source not in self._miners[inv.target]._NIC._neighbors):
+            return True
         getData = self._miners[inv.target]._NIC.reply_getdata(inv)
         for attr, value in getData.__dict__.items():
             setattr(getDataReply, attr, value)
@@ -602,12 +609,18 @@ class AdHocNetwork(Network):
             'miner_num':self.MINER_NUM,
             'Generate Approach':self._init_mode,
             'Generate Edge Probability':self._ave_degree/self.MINER_NUM if self._init_mode == 'rand' else None,
-            'Diameter':nx.diameter(self._graph),
-            'Average Shortest Path Length':round(nx.average_shortest_path_length(self._graph), 3),
+            # 移动分区图没有全图有限路径长度。
+            'Diameter': (None if self._dag_settings and not nx.is_connected(self._graph)
+                         else nx.diameter(self._graph)),
+            'Average Shortest Path Length': (None if self._dag_settings and not nx.is_connected(self._graph)
+                         else round(nx.average_shortest_path_length(self._graph), 3)),
             'Degree Histogram': nx.degree_histogram(self._graph),
             "Average Degree": sum(dict(nx.degree(self._graph)).values())/len(self._graph.nodes),
             'Average Cluster Coefficient':round(nx.average_clustering(self._graph), 3),
-            'Degree Assortativity':round(nx.degree_assortativity_coefficient(self._graph), 3),
+            # 常度/无边图显式记录未定义。
+            'Degree Assortativity': (None if self._dag_settings and len(
+                {self._graph.degree(n) for e in self._graph.edges for n in e}) < 2
+                else round(nx.degree_assortativity_coefficient(self._graph), 3)),
         }
         NET_RESULT_PATH = global_var.get_net_result_path()
         with open(NET_RESULT_PATH / 'Network Attributes.txt', 'a+', encoding='utf-8') as f:

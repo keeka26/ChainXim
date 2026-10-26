@@ -1,0 +1,2253 @@
+{
+  "schema_version": "chainxim_honest_plot_audit_v3",
+  "grid": {
+    "schema_version": "chainxim_honest_analysis_grid_v1",
+    "fixed": {
+      "rounds": 3000,
+      "miners": 5,
+      "q": 5,
+      "difficulty": 8,
+      "blocksize": 1.0
+    },
+    "axes": {
+      "miners": [
+        5,
+        10,
+        15,
+        20,
+        25,
+        30,
+        35,
+        40
+      ],
+      "hashrate": [
+        5
+      ],
+      "difficulty": [
+        8
+      ],
+      "blocksize": [
+        1.0
+      ]
+    },
+    "networks": [
+      "LockstepNetwork",
+      "DeterPropNetwork",
+      "StochPropNetwork",
+      "TopologyNetwork",
+      "AdHocNetwork"
+    ],
+    "seeds": [
+      7
+    ],
+    "losses": [
+      "low",
+      "medium",
+      "high"
+    ]
+  },
+  "throughput": "both",
+  "case_throughput": {
+    "miners": "both"
+  },
+  "ledger_scope": {
+    "Bitcoin": "original num_of_valid_blocks / mining rounds",
+    "DAG": "all-node order longest common prefix at mining end / mining rounds, excluding genesis; current agreement, not finality"
+  },
+  "throughput_scopes": {
+    "total": "both protocols: all generated non-genesis blocks / actual mining rounds",
+    "eventual": "potential utilization proxy: Bitcoin original main count / rounds; DAG generated / rounds assuming valid blocks eventually disseminate and enter the order; not measured network capacity",
+    "current_order": "Bitcoin original main count / rounds; DAG all-node order common prefix / rounds",
+    "bitcoin_original_main": "num_of_valid_blocks unchanged: common prefix of global selected chain and height-selected honest nodes, controlled by consensus_miner_quantile; default -1 selects one longest honest node",
+    "reference_ordered": "DAG reference-node metric retained for local diagnostics; not used for the common-order curve"
+  },
+  "grid_source": "cli",
+  "grid_sha256": "cd86d71779e9423b8125ffe4f4e1ae31d9d0a625b47a74a8387f6a275ae48ede",
+  "observed_points": 80,
+  "missing_points": [],
+  "files": [
+    "miners_throughput_comparison_blocks.png",
+    "miners_throughput_comparison_blocks.pdf"
+  ],
+  "seed_band": "observed min/max, not confidence interval; deterministic PoW seeds need not be independent",
+  "inputs": [
+    {
+      "path": "miners/Bitcoin/LockstepNetwork/n5/seed7",
+      "sha256": {
+        "parameters.txt": "e14750695daeae6d51376b98e7b7514b49eb0f18a2d5d5dcc7e2bdd54a90c848",
+        "evaluation results.txt": "f207254dfbe68bd7b0163c4f4bba88dcb78a60fbde9beaddeb77cec9eb83894f",
+        "Chain Data/chain_data.txt": "8411d73369169510b12c3f0c18a5d2ffda4e68037e9c8366c85a8346cb345f18",
+        "run.log": "e96bede49aadfde47709cce0daab13b71b4e966c032b67ccf11d6b652fc073c8"
+      },
+      "network": {},
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers",
+      "chain_dump_selection": "last global chain dump; number of runs matches appended evaluation sections; generated block count validated",
+      "evaluation_selection": "last complete statistics section; counts agree with the latest run.log; original file retained",
+      "evaluation_sections": 3,
+      "selected_section_sha256": {
+        "evaluation results.txt": "6b495693156d741112397181342959e73c584b8a4c9bcdfdd3df450817dc5ea6",
+        "Chain Data/chain_data.txt": "adff79ed8caaa26c9c9ee7805e7fe9f655029f69a0ab2f0bd1473ddc1bcde417"
+      }
+    },
+    {
+      "path": "miners/Bitcoin/LockstepNetwork/n10/seed7",
+      "sha256": {
+        "parameters.txt": "4ba9cfbde464fd3fdb70b1910c50c6d25eaf860f0d955702f9186973a20b7ca0",
+        "evaluation results.txt": "82fb38a3a617b7b0fb3024bc40737113a6f7a45ed9c9b199a73bb6783c25f006",
+        "Chain Data/chain_data.txt": "a93e294ceb63fcdbf0a4d91e71d6e349b167fc34f95f11eecfda233e77806306",
+        "run.log": "cb427d08975aa1b6908cf1d80dff54c89051abb4af9c77522d94bd93c1b491c9"
+      },
+      "network": {},
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers",
+      "chain_dump_selection": "last global chain dump; number of runs matches appended evaluation sections; generated block count validated",
+      "evaluation_selection": "last complete statistics section; counts agree with the latest run.log; original file retained",
+      "evaluation_sections": 3,
+      "selected_section_sha256": {
+        "evaluation results.txt": "db34adc3fd105ef3e4c6e5ffacb54b8932bafccf9765520a1658ff6b429d7d84",
+        "Chain Data/chain_data.txt": "7b638b42684dcc0cea43ee9d2feaf3e9e7f111b14b8b8bce6a70df9e7fe9f645"
+      }
+    },
+    {
+      "path": "miners/Bitcoin/LockstepNetwork/n15/seed7",
+      "sha256": {
+        "parameters.txt": "007749ff3e1cfd1480781d49d167b8c1a00fc74fe2821a72d0e6fd12e531353b",
+        "evaluation results.txt": "980bdc12b2d28a8b94867fe7493f5db227de7b07ef8f64b9e09ec7d348c54776",
+        "Chain Data/chain_data.txt": "40218cde049103af3546febe16ea9b8e6efd42f1572a06648f164f6d20ca8880",
+        "run.log": "e77bc2a2ecdbd10bd888d9b72c50664cd3a95a57390ab20af9435c877042ab83"
+      },
+      "network": {},
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers",
+      "chain_dump_selection": "last global chain dump; number of runs matches appended evaluation sections; generated block count validated",
+      "evaluation_selection": "last complete statistics section; counts agree with the latest run.log; original file retained",
+      "evaluation_sections": 3,
+      "selected_section_sha256": {
+        "evaluation results.txt": "adfc1a414b9c148e338d5ff5394d99ad52c048f3fb0820609664899ddbfca470",
+        "Chain Data/chain_data.txt": "6b177a9535f0a990a6a133857ed5901e168f1c5413675a8b0e76dfb43b8da7aa"
+      }
+    },
+    {
+      "path": "miners/Bitcoin/LockstepNetwork/n20/seed7",
+      "sha256": {
+        "parameters.txt": "9cb7289a23c3dffe6b322afc09b637198e5d027f52d3bd1c099c074c1a71ce6b",
+        "evaluation results.txt": "cf821fc3520c1717c03066ac14157d2c28f65d132e32930b0c4b5f98d21b72a3",
+        "Chain Data/chain_data.txt": "f57ecf56da22a633cf8d80287da26eaa644a608a81d173f2784a0c168be442d1",
+        "run.log": "0d0817c12ef5b9ed730a8ee8dfcd5254b1ebe303706bad562179a021f9f46b2f"
+      },
+      "network": {},
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers",
+      "chain_dump_selection": "last global chain dump; number of runs matches appended evaluation sections; generated block count validated",
+      "evaluation_selection": "last complete statistics section; counts agree with the latest run.log; original file retained",
+      "evaluation_sections": 3,
+      "selected_section_sha256": {
+        "evaluation results.txt": "fb77a34d6ff6e043eb7083bf599378c4c0d017c968c42ebb92593e3b8cbe4759",
+        "Chain Data/chain_data.txt": "6d847ead3effb080e317ae5381c207d81bdd07e5ba638378a33c6de7c9daff4a"
+      }
+    },
+    {
+      "path": "miners/Bitcoin/LockstepNetwork/n25/seed7",
+      "sha256": {
+        "parameters.txt": "2fd87636a6ec301dda5c9d880b120e64a5d3da52a786e01d386ba60477599d7a",
+        "evaluation results.txt": "6ecdf8c741df78aa08c1acb9c97d4d204ccaf86e928eba39cddf0bceafd1e82b",
+        "Chain Data/chain_data.txt": "672e9f9c4d5f0501831d463adff68f89d5f3afa1bb7a8103ad316c9879242e90",
+        "run.log": "422d52f42ae42f54444745515abdcad1699143986655e8ca83d12086fe430208"
+      },
+      "network": {},
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers",
+      "chain_dump_selection": "last global chain dump; number of runs matches appended evaluation sections; generated block count validated",
+      "evaluation_selection": "last complete statistics section; counts agree with the latest run.log; original file retained",
+      "evaluation_sections": 3,
+      "selected_section_sha256": {
+        "evaluation results.txt": "1962109c24f27ead1351d6413ab155713f95577f29d6ed9b62c952e62ae0d33f",
+        "Chain Data/chain_data.txt": "eabe0f6422aaa08b6c978f955753603e8d2b7df8c02f24e362a7eb8c0a008db0"
+      }
+    },
+    {
+      "path": "miners/Bitcoin/LockstepNetwork/n30/seed7",
+      "sha256": {
+        "parameters.txt": "129d3d9ee8efe0e492f0c08c5dc8844ca8c49722cd0885822bcbbc0b5f6171f8",
+        "evaluation results.txt": "cebe23d00c17b8152a4664729b64cfb1d015f08bcd3d142f9b1c44ec34604e27",
+        "Chain Data/chain_data.txt": "1bea1a0bd202250009093bd98cf410503bf64da9bf2dc133ce17f86df429325e",
+        "run.log": "cdf96353c3befcb8e8a6c3949716fba54672bc81c6a379ff48183d9782aea9c0"
+      },
+      "network": {},
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers",
+      "chain_dump_selection": "last global chain dump; number of runs matches appended evaluation sections; generated block count validated",
+      "evaluation_selection": "last complete statistics section; counts agree with the latest run.log; original file retained",
+      "evaluation_sections": 3,
+      "selected_section_sha256": {
+        "evaluation results.txt": "d7c505c3cb8b72db6d040ef6c916e8fc1e02d8fc4de01e1b80683acab3619252",
+        "Chain Data/chain_data.txt": "afa3472a2ee00725b6fc9bfacc9d1c43b26a71102aaf2ec150e7af8d99d20b3e"
+      }
+    },
+    {
+      "path": "miners/Bitcoin/LockstepNetwork/n35/seed7",
+      "sha256": {
+        "parameters.txt": "099c3b9c36a1cbdfccdf74c0f8fe292f5279de8aa00bf90cce7f57c61b841eaa",
+        "evaluation results.txt": "63e471c42e9b1418100f2d19a2503f16e8054443e32dfd46864004e06e81b398",
+        "Chain Data/chain_data.txt": "fcfd6896f08c26450afada8fa498aadacfaf4a264fd981190e2396fad6b4afc4",
+        "run.log": "f5776f194afbcb5b32f8da4daaa5b263bcfd3445f36e92fc8f77956d7c3aa44f"
+      },
+      "network": {},
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers",
+      "chain_dump_selection": "last global chain dump; number of runs matches appended evaluation sections; generated block count validated",
+      "evaluation_selection": "last complete statistics section; counts agree with the latest run.log; original file retained",
+      "evaluation_sections": 3,
+      "selected_section_sha256": {
+        "evaluation results.txt": "c09ccdfabffb14b5efb58bd64d82baed64ed2c1a4bb991ba6258430815fd65fc",
+        "Chain Data/chain_data.txt": "c2aff63d1f0403df0e8799d5a4115132cd2885b91a223ba05b326a24d0c70e61"
+      }
+    },
+    {
+      "path": "miners/Bitcoin/LockstepNetwork/n40/seed7",
+      "sha256": {
+        "parameters.txt": "a2a609a9b064dc8ca27a49076eafd5b3e825ca7fa2236b6c93e6a20cf77c252a",
+        "evaluation results.txt": "0d87957d0f5a814c1cdd2c4e148acf9d24947c50a263b082a5a5e218c9a9567b",
+        "Chain Data/chain_data.txt": "6964e837006a94dc1d350a466e08fef71086a73fc16c742783cf0c8a120b1733",
+        "run.log": "a3682279c0aa180a648bfa13f506a6397d2d9d29be754e9017e90353fe98cdf0"
+      },
+      "network": {},
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers",
+      "chain_dump_selection": "last global chain dump; number of runs matches appended evaluation sections; generated block count validated",
+      "evaluation_selection": "last complete statistics section; counts agree with the latest run.log; original file retained",
+      "evaluation_sections": 2,
+      "selected_section_sha256": {
+        "evaluation results.txt": "fd6fbdf58b2220f64edc81ddbfbff511cdbc744f75b489284345ef6c8cf90cdb",
+        "Chain Data/chain_data.txt": "57eb8268cde5e5e57b44061a2ef9cea3d0bec4e4090f96c6b6bc479e5a1e5728"
+      }
+    },
+    {
+      "path": "miners/Bitcoin/DeterPropNetwork/n5/seed7",
+      "sha256": {
+        "parameters.txt": "c0e6c3e7ee14a5423a519cbe831db50668e243ec604752b59aaacc962416b4a9",
+        "evaluation results.txt": "5dce45c152b4b57c71ab30f93a4ae513aeb53158f0cb549485a003fa3b83d34a",
+        "Chain Data/chain_data.txt": "188249ce7beca2acfc8fb3708d6071363f63f0a3cecf309726bb56519a78454c",
+        "Network Results/network_attributes.txt": "fcd9cc7c23dd7c15d2381f0e53e10049a34f229b45a91c7919e1fc1f0329c437"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/DeterPropNetwork/n10/seed7",
+      "sha256": {
+        "parameters.txt": "936c9aa2984ced23e9a6ccc4398d3ad565189dbc1293f5f996858547edde744c",
+        "evaluation results.txt": "62d241e3bfad52991468a8a876b02ed0a1999d8f0bcb90f557633c76503b7291",
+        "Chain Data/chain_data.txt": "0e1fd83d0abc3866be2a4b955063e31e4d7995af925729d2879c39f47ebe2ca2",
+        "Network Results/network_attributes.txt": "fcd9cc7c23dd7c15d2381f0e53e10049a34f229b45a91c7919e1fc1f0329c437"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/DeterPropNetwork/n15/seed7",
+      "sha256": {
+        "parameters.txt": "500d0e08089f8123e208267f5ec9c7af506fe6cd8097aeda9ed60171b2291c9e",
+        "evaluation results.txt": "eba5725865b87c80aa378f09c9c9bd93acbc3d4fe7a7ba5b67b8915ca7bca7a8",
+        "Chain Data/chain_data.txt": "055e769482321aa7480f6898978878593af99e88bcfcc35788c8cd0c8dc894ec",
+        "Network Results/network_attributes.txt": "fcd9cc7c23dd7c15d2381f0e53e10049a34f229b45a91c7919e1fc1f0329c437"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/DeterPropNetwork/n20/seed7",
+      "sha256": {
+        "parameters.txt": "656fb1c9d001fa8e2127edcc79af417cecba8ccd8a4cace1abd6acc4829067ed",
+        "evaluation results.txt": "f40ecf916d2e3cbdb0556282af86b23599d66f6964b2646663c9ecb8bef54bba",
+        "Chain Data/chain_data.txt": "2f2d7cecea45456c0e2becbbc550cb1bde0fb938e480f3da163e18b3574bcaaf",
+        "Network Results/network_attributes.txt": "fcd9cc7c23dd7c15d2381f0e53e10049a34f229b45a91c7919e1fc1f0329c437"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/DeterPropNetwork/n25/seed7",
+      "sha256": {
+        "parameters.txt": "e4c9d71385741f91224e84cddee97c795867a02c709b1f1f547a1b0f254d785b",
+        "evaluation results.txt": "da968b316ebff67a14b655bf3c84e0a79948b61d77bb85345f90f160995b7f77",
+        "Chain Data/chain_data.txt": "b21614eb1118db6f4b57d19e5a494ceb6df042480ec17150e38034000b94c9b4",
+        "Network Results/network_attributes.txt": "fcd9cc7c23dd7c15d2381f0e53e10049a34f229b45a91c7919e1fc1f0329c437"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/DeterPropNetwork/n30/seed7",
+      "sha256": {
+        "parameters.txt": "bbfd9cbbaee53a8bb0d302076d57c35cae5cb7c1205537cccf654c75bd6dd26a",
+        "evaluation results.txt": "c4bbc94615b9f4a14a1a45683be410427cfa7cdcc786952c22a9ae1ac983bc43",
+        "Chain Data/chain_data.txt": "fd54094723d61417683babcdd4e2a2d63bb7f8e2d2b0010e6b0d726dd852d6c8",
+        "Network Results/network_attributes.txt": "fcd9cc7c23dd7c15d2381f0e53e10049a34f229b45a91c7919e1fc1f0329c437"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/DeterPropNetwork/n35/seed7",
+      "sha256": {
+        "parameters.txt": "f36b75ad8b1272fca2a73e09fef2a766708019914e4a588c0be9da494623cf3d",
+        "evaluation results.txt": "9510112523301bfe61379d2b6bd17f65521920463885fd3db1e68b97b6fc6270",
+        "Chain Data/chain_data.txt": "b59fb5f8ab162c7af7689ff85334089f7a6e7f68c17815c05e8d71ae6fcd6615",
+        "Network Results/network_attributes.txt": "fcd9cc7c23dd7c15d2381f0e53e10049a34f229b45a91c7919e1fc1f0329c437"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/DeterPropNetwork/n40/seed7",
+      "sha256": {
+        "parameters.txt": "6ed31be1ce01bdbc6dd323e77ee4e0b17c89c8f6e4df0449525d2fdb8c6f2561",
+        "evaluation results.txt": "691396ca63a25247d8b2487d8eb729229578dcc479066a35e37c555788d69512",
+        "Chain Data/chain_data.txt": "30b9261b0c2eef027caeaaed9b40fd6462aaa634a3a73435e25468ac12dc34f9",
+        "Network Results/network_attributes.txt": "fcd9cc7c23dd7c15d2381f0e53e10049a34f229b45a91c7919e1fc1f0329c437"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/StochPropNetwork/n5/seed7",
+      "sha256": {
+        "parameters.txt": "3e5b4402d4ed540cb6d69e446d6102d45f6c1b67e0e144b1f644b078ef9eb912",
+        "evaluation results.txt": "8477289842039b8948d72e5ff3b8ac0f0ab46da63c23552c5680881a8fc89284",
+        "Chain Data/chain_data.txt": "eb973097af3a904d8f933424ff6d5735815560984ddb9ea1a4667b20c818b3ff",
+        "Network Results/network_attributes.txt": "a0bc380ba43916972127240fbbbe011f687865f127e0dcf9fa7186d7dd4b41be"
+      },
+      "network": {
+        "rcvprob_start": 0.25,
+        "rcvprob_inc": 0.25,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/StochPropNetwork/n10/seed7",
+      "sha256": {
+        "parameters.txt": "6417dc9f5757d7ca45e4767add0e84c46da6bdf732c40789d221bcdefb9ff96a",
+        "evaluation results.txt": "2e04d6313d402ebc97e02db1c20367955488fb39a48a5153745fa6edf64e2350",
+        "Chain Data/chain_data.txt": "19089aa2eccd205a6be25af38de9ac0c55b84e06d542aa0aa3bb18f1ead0776d",
+        "Network Results/network_attributes.txt": "a0bc380ba43916972127240fbbbe011f687865f127e0dcf9fa7186d7dd4b41be"
+      },
+      "network": {
+        "rcvprob_start": 0.25,
+        "rcvprob_inc": 0.25,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/StochPropNetwork/n15/seed7",
+      "sha256": {
+        "parameters.txt": "d84deaddd1ed869e9ab25f999ffcdff122375e467fb84c6525dc041591539e5c",
+        "evaluation results.txt": "5a0babfa3d0d7903297295331c604bfd58de38cfda2d178274aa1ed7c589f454",
+        "Chain Data/chain_data.txt": "49e465837ad0e732f8c79c60fe80fdaef15e76c55877c2269d59d7f48bdb82d8",
+        "Network Results/network_attributes.txt": "a0bc380ba43916972127240fbbbe011f687865f127e0dcf9fa7186d7dd4b41be"
+      },
+      "network": {
+        "rcvprob_start": 0.25,
+        "rcvprob_inc": 0.25,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/StochPropNetwork/n20/seed7",
+      "sha256": {
+        "parameters.txt": "6c9fc5625e3f0181391cc9433836fcc6f9a3ff954e353ecf7b821fdbd755c60b",
+        "evaluation results.txt": "f47d355e11936242788e14c0e58a1d5fa001064649befd536e9269eb60d15172",
+        "Chain Data/chain_data.txt": "4cfc4674ade8ef7d6da348f61bf0dbf394f569d16d77258a78d2f66c16bee739",
+        "Network Results/network_attributes.txt": "a0bc380ba43916972127240fbbbe011f687865f127e0dcf9fa7186d7dd4b41be"
+      },
+      "network": {
+        "rcvprob_start": 0.25,
+        "rcvprob_inc": 0.25,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/StochPropNetwork/n25/seed7",
+      "sha256": {
+        "parameters.txt": "16439e7fe52d65cd11b29f10dbd0f9a25783ae29d3c273149ec3c8856e729a58",
+        "evaluation results.txt": "d8794e1141b81fa52b18f7d57deaf688006fdd5ec0373097e2b8d2575022c9e9",
+        "Chain Data/chain_data.txt": "073faed03823ea9f6cf38c0a0e502745dd9a4ce9c32c8165cc84da188d10ff3f",
+        "Network Results/network_attributes.txt": "a0bc380ba43916972127240fbbbe011f687865f127e0dcf9fa7186d7dd4b41be"
+      },
+      "network": {
+        "rcvprob_start": 0.25,
+        "rcvprob_inc": 0.25,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/StochPropNetwork/n30/seed7",
+      "sha256": {
+        "parameters.txt": "5f7a7bff69e9926fa51a9dfb1e6b6caccad2576a554cef02dee06fab0ddf154a",
+        "evaluation results.txt": "4ee201847d43bf4227db92f215f80c0149edeec72313451f5387a61e5c62f510",
+        "Chain Data/chain_data.txt": "e9fd20f3f4f08a387d639023c10af366f3d97d955bcce4fb5786ff34a1bbdcb1",
+        "Network Results/network_attributes.txt": "a0bc380ba43916972127240fbbbe011f687865f127e0dcf9fa7186d7dd4b41be"
+      },
+      "network": {
+        "rcvprob_start": 0.25,
+        "rcvprob_inc": 0.25,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/StochPropNetwork/n35/seed7",
+      "sha256": {
+        "parameters.txt": "5eee41df3f8de67c0e0accac89e84b8bc1b8c808d62fb3d230c1455e6bb6719b",
+        "evaluation results.txt": "9b2cf479bb4d5c41f744b9d9b11d085e1219eb5b7cc072ac0799c6b9275aa5eb",
+        "Chain Data/chain_data.txt": "6473ddca9bb0d73f205c31a6edc04bde488b6471dd2c77f14546c3f6fe57738f",
+        "Network Results/network_attributes.txt": "a0bc380ba43916972127240fbbbe011f687865f127e0dcf9fa7186d7dd4b41be"
+      },
+      "network": {
+        "rcvprob_start": 0.25,
+        "rcvprob_inc": 0.25,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/StochPropNetwork/n40/seed7",
+      "sha256": {
+        "parameters.txt": "4f643131c93b033381de026939740b207f2d031a2e96cc13c9539c2f014f7232",
+        "evaluation results.txt": "b6b335551572fc33c0eccd0ae9b08ffa3141fd7202735a13c311f2a97136f379",
+        "Chain Data/chain_data.txt": "64a285feb36f7edea435294fd671424c1316f763187dee0585f0a0ed5f6ae138",
+        "Network Results/network_attributes.txt": "a0bc380ba43916972127240fbbbe011f687865f127e0dcf9fa7186d7dd4b41be"
+      },
+      "network": {
+        "rcvprob_start": 0.25,
+        "rcvprob_inc": 0.25,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/TopologyNetwork/n5/seed7",
+      "sha256": {
+        "parameters.txt": "85812af4f0b69bcb47bceacda21a8713289606cd666f2d49fbff339907a2bc1f",
+        "evaluation results.txt": "e246b3eeac419b04320bdd56a024ff13490dca47353bd490f2d44531e3867484",
+        "Chain Data/chain_data.txt": "cfa744ab9508513143378b2bcf2f1c18b94244d59739c55777f754db49492a34"
+      },
+      "network": {
+        "show_label": false,
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "dynamic": false,
+        "enable_resume_transfer": true,
+        "ave_degree": 4.0,
+        "bandwidth_honest": 0.5,
+        "bandwidth_adv": 0.5,
+        "outage_prob": 0.01,
+        "avg_tp_change_interval": 10.0,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "max_allowed_partitions": 1.0,
+        "init_mode": "rand",
+        "topology_path": null,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "rand_mode": "homogeneous"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/TopologyNetwork/n10/seed7",
+      "sha256": {
+        "parameters.txt": "f197484041723a2d7f5cb1bcdffecc733974187b2110fbfd14e28c4a86780a86",
+        "evaluation results.txt": "6db3abd237d047587dc3cd035be2aa6dc90a5c805a973cf08f55c8c394fe1910",
+        "Chain Data/chain_data.txt": "546daf7437cf8a568af715ada0245478f5b0cb43bbe5c1d6105ed0048b18326a"
+      },
+      "network": {
+        "show_label": false,
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "dynamic": false,
+        "enable_resume_transfer": true,
+        "ave_degree": 4.0,
+        "bandwidth_honest": 0.5,
+        "bandwidth_adv": 0.5,
+        "outage_prob": 0.01,
+        "avg_tp_change_interval": 10.0,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "max_allowed_partitions": 1.0,
+        "init_mode": "rand",
+        "topology_path": null,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "rand_mode": "homogeneous"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/TopologyNetwork/n15/seed7",
+      "sha256": {
+        "parameters.txt": "d36100353269bd50cab66582245269dede3b0a2d5d1cbbb2ecc1206d28416c96",
+        "evaluation results.txt": "ffb010dc2e23bcea85edea807fe72d6ff4d908a5a16ba1a7e82de6c34fc69af8",
+        "Chain Data/chain_data.txt": "a35e82ca5bfb2aae8a3d2798bc2790b4f93d2ff59a2da0f96f98e81e0100cdd6"
+      },
+      "network": {
+        "show_label": false,
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "dynamic": false,
+        "enable_resume_transfer": true,
+        "ave_degree": 4.0,
+        "bandwidth_honest": 0.5,
+        "bandwidth_adv": 0.5,
+        "outage_prob": 0.01,
+        "avg_tp_change_interval": 10.0,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "max_allowed_partitions": 1.0,
+        "init_mode": "rand",
+        "topology_path": null,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "rand_mode": "homogeneous"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/TopologyNetwork/n20/seed7",
+      "sha256": {
+        "parameters.txt": "c75db08d9a3a3b81ab44384d31198cdebdd6cd90d0773b5d951f5c60075c1560",
+        "evaluation results.txt": "487878360be7d4a87a06f4a0b394cc776647a3e0c2a02c058e5e21411d5437e7",
+        "Chain Data/chain_data.txt": "5905797def5b230a07a1a36696f6e7f565423e52a98504429c989cdba9d4ad3f"
+      },
+      "network": {
+        "show_label": false,
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "dynamic": false,
+        "enable_resume_transfer": true,
+        "ave_degree": 4.0,
+        "bandwidth_honest": 0.5,
+        "bandwidth_adv": 0.5,
+        "outage_prob": 0.01,
+        "avg_tp_change_interval": 10.0,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "max_allowed_partitions": 1.0,
+        "init_mode": "rand",
+        "topology_path": null,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "rand_mode": "homogeneous"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/TopologyNetwork/n25/seed7",
+      "sha256": {
+        "parameters.txt": "59bab8c39f3b8ad2ffe9555df5c3c241b8dcb3dd5001a8e90ce708de5237a456",
+        "evaluation results.txt": "fb7f802078c691becaa48ba6bb4e150e87c521dec666e7024452163f975e1ba3",
+        "Chain Data/chain_data.txt": "6f8b563746e22f8f3fae4c924515180e804c426be3f66cab094706107daad2ed"
+      },
+      "network": {
+        "show_label": false,
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "dynamic": false,
+        "enable_resume_transfer": true,
+        "ave_degree": 4.0,
+        "bandwidth_honest": 0.5,
+        "bandwidth_adv": 0.5,
+        "outage_prob": 0.01,
+        "avg_tp_change_interval": 10.0,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "max_allowed_partitions": 1.0,
+        "init_mode": "rand",
+        "topology_path": null,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "rand_mode": "homogeneous"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/TopologyNetwork/n30/seed7",
+      "sha256": {
+        "parameters.txt": "cb9eae30a2075dcbbf9a8f235f599529f9752606841c2b67d431049fc00e3772",
+        "evaluation results.txt": "0d1f0d9a54ee75ac7694bf94fe31f8c4d9be212ac0556093e91c1d9380cacb86",
+        "Chain Data/chain_data.txt": "f65378ef26f63b493e88aeaddec601f5580c3e673b163664a99acc813992f349"
+      },
+      "network": {
+        "show_label": false,
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "dynamic": false,
+        "enable_resume_transfer": true,
+        "ave_degree": 4.0,
+        "bandwidth_honest": 0.5,
+        "bandwidth_adv": 0.5,
+        "outage_prob": 0.01,
+        "avg_tp_change_interval": 10.0,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "max_allowed_partitions": 1.0,
+        "init_mode": "rand",
+        "topology_path": null,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "rand_mode": "homogeneous"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/TopologyNetwork/n35/seed7",
+      "sha256": {
+        "parameters.txt": "ce7c1e23d8375f6af39798f3d2fff1ff6c658cdcc353b224352bad9a83f50115",
+        "evaluation results.txt": "1f3a7de293ea0b97fdae0692a870f6d960a7902ce1ca1a83c7f0032b98f9d135",
+        "Chain Data/chain_data.txt": "bd7118cf2965527b5fca3a884c6aea66ce5e1b864c645f1cacfaf6e3884642f6"
+      },
+      "network": {
+        "show_label": false,
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "dynamic": false,
+        "enable_resume_transfer": true,
+        "ave_degree": 4.0,
+        "bandwidth_honest": 0.5,
+        "bandwidth_adv": 0.5,
+        "outage_prob": 0.01,
+        "avg_tp_change_interval": 10.0,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "max_allowed_partitions": 1.0,
+        "init_mode": "rand",
+        "topology_path": null,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "rand_mode": "homogeneous"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/TopologyNetwork/n40/seed7",
+      "sha256": {
+        "parameters.txt": "4794131ca02a94b60de440d98094854dec06a428248327f53964a4ad4ea28335",
+        "evaluation results.txt": "ff2918065de36ebc45097f967da2e26aa684cc5753da99429511f1fccd52b569",
+        "Chain Data/chain_data.txt": "2081f8086ebe267e2f24428d2635ffaea3c07996befb80d1a49501212ceffd72"
+      },
+      "network": {
+        "show_label": false,
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "dynamic": false,
+        "enable_resume_transfer": true,
+        "ave_degree": 4.0,
+        "bandwidth_honest": 0.5,
+        "bandwidth_adv": 0.5,
+        "outage_prob": 0.01,
+        "avg_tp_change_interval": 10.0,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "max_allowed_partitions": 1.0,
+        "init_mode": "rand",
+        "topology_path": null,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "rand_mode": "homogeneous"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/AdHocNetwork/n5/seed7",
+      "sha256": {
+        "parameters.txt": "4a46687bca012764dc7f2899dd739eee55b47cd82b961fa221f11cff032d88c8",
+        "evaluation results.txt": "8b3271b763f6723731722781b50923c3375b3c42c5c2e96f06d4a6eb447ee2c1",
+        "Chain Data/chain_data.txt": "8f8c5433c1e7f393bcddbec0773836f3ed6232883ac468dc5ee062b426c20a86"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 2.0,
+        "region_width": 100.0,
+        "comm_range": 70.0,
+        "move_variance": 1.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.05,
+        "bandwidth_max": 5.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "path_loss_level": "medium"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/AdHocNetwork/n10/seed7",
+      "sha256": {
+        "parameters.txt": "5aea04b0453a43c954e8f05f9fad8fee46ea6494bcfdadbe697fcf06ee8647ab",
+        "evaluation results.txt": "4c87131aa8671338d5758cf8ef35fca2f7aa123a45d3887ab712a67677b3ab49",
+        "Chain Data/chain_data.txt": "1d6c3fa75e9a375cf31fc3d37d874f73fa5e4533f819b0e29513aca6b8e80f15"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 2.0,
+        "region_width": 100.0,
+        "comm_range": 70.0,
+        "move_variance": 1.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.05,
+        "bandwidth_max": 5.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "path_loss_level": "medium"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/AdHocNetwork/n15/seed7",
+      "sha256": {
+        "parameters.txt": "5e7f4a38e37bb36e9cd655aadf2b648b3248392a04aa98c25e41ad6e11c9f030",
+        "evaluation results.txt": "d1364e000d39108223c66a010b3030c0b7107f69b5c1900f14735c6cd8766853",
+        "Chain Data/chain_data.txt": "5164ad38332fe2ccfe9fe4dc6ccc9ea8aed36348d25c484969fbe8a0121c7072"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 2.0,
+        "region_width": 100.0,
+        "comm_range": 70.0,
+        "move_variance": 1.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.05,
+        "bandwidth_max": 5.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "path_loss_level": "medium"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/AdHocNetwork/n20/seed7",
+      "sha256": {
+        "parameters.txt": "5e4fd34ec5d5507ed49d32a979b66bad54ea41119771ec8796a780525302fa81",
+        "evaluation results.txt": "a6b8b08f9319cc9ba2806ff8ecfb815045aca32bbef35f947d285fc4e3076d69",
+        "Chain Data/chain_data.txt": "709b9473c495fffd9688a620f075c7b2a9542e6c71c966b4a4e75596471b86e3"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 2.0,
+        "region_width": 100.0,
+        "comm_range": 70.0,
+        "move_variance": 1.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.05,
+        "bandwidth_max": 5.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "path_loss_level": "medium"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/AdHocNetwork/n25/seed7",
+      "sha256": {
+        "parameters.txt": "9b4094375fa192bedb77a4cc7d1212dd003e6c9b2118e81327402f0bf3a6bd41",
+        "evaluation results.txt": "59f6abb2597a0b0b8a34c7dd325284a16c248b2cc43514410eb98bdac5d582e8",
+        "Chain Data/chain_data.txt": "c5526b54c0a68ae886157a9d4cdf34ab42ba485cc50680652228d1a41aaa8530"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 2.0,
+        "region_width": 100.0,
+        "comm_range": 70.0,
+        "move_variance": 1.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.05,
+        "bandwidth_max": 5.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "path_loss_level": "medium"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/AdHocNetwork/n30/seed7",
+      "sha256": {
+        "parameters.txt": "9eed35545dfba05f365eef1248079ab7bd19b77e0fc33798a2a9ec7f39bddfb7",
+        "evaluation results.txt": "1eb1a0e927b04d6bbfe63a73868784fd40c02a62a51e53ec4f21529b04879041",
+        "Chain Data/chain_data.txt": "30cba0ed74c4e11ed8727cfcbe5135593a10b011a5f6015c7bbbda37ce681fee"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 2.0,
+        "region_width": 100.0,
+        "comm_range": 70.0,
+        "move_variance": 1.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.05,
+        "bandwidth_max": 5.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "path_loss_level": "medium"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/AdHocNetwork/n35/seed7",
+      "sha256": {
+        "parameters.txt": "5242243da80f46910dd4eb50799637153c231bf85732ac3d31196bb46e6d16a5",
+        "evaluation results.txt": "397ffb3ddf7a0b4ba21295e11ccee9d8dd84707b626f257647a143a0f3ccd231",
+        "Chain Data/chain_data.txt": "f64d50506f37cfb7d9cde18cc5354fc49e40c4b142965f9e7412057918c4fee9"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 2.0,
+        "region_width": 100.0,
+        "comm_range": 70.0,
+        "move_variance": 1.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.05,
+        "bandwidth_max": 5.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "path_loss_level": "medium"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/Bitcoin/AdHocNetwork/n40/seed7",
+      "sha256": {
+        "parameters.txt": "de0ee636f67393c09fe6069c618050d0f75b3d53d5acc4ae27f517185ec7af7d",
+        "evaluation results.txt": "7e6a92d9d953b0c98b593b6cb79e4d377b911052888c7ae4277be4681d13e899",
+        "Chain Data/chain_data.txt": "c04c0029feae8e1727f7fe96cf28cbcd66631c0c1c71516a171b4f61fb263cb5"
+      },
+      "network": {
+        "enable_large_scale_fading": true,
+        "ave_degree": 2.0,
+        "region_width": 100.0,
+        "comm_range": 70.0,
+        "move_variance": 1.0,
+        "outage_prob": 0.01,
+        "segment_size": 0.05,
+        "bandwidth_max": 5.0,
+        "init_mode": "rand",
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "path_loss_level": "medium"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "miners/DAG/LockstepNetwork/n5/seed7",
+      "sha256": {
+        "run_manifest.json": "0226e6f6b42e39505dcc8e848632f63cc349ad5d68f66f887867195d8589006f",
+        "dag_metrics.json": "aebd9b8498bcd97523052544d43a027c8078bcdcb87755d9601c0e03b79ded3c",
+        "Chain Data/dag_snapshot.json": "e88f621be1e92801f501197d5f3d84a29de25e7e403a885c9770a47d3aaf05ea"
+      },
+      "network": {},
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/LockstepNetwork/n10/seed7",
+      "sha256": {
+        "run_manifest.json": "c71b6ae36f8a75a0c394a60ce6fa8f37d56f0150c25776a685309fd7c916556f",
+        "dag_metrics.json": "9bbf238892216421ebbd52915b5a4d68b3fc3c0f19e18626e423463a06ec33b4",
+        "Chain Data/dag_snapshot.json": "3a911cb9af3b4c6d7b6309db1727f6653a4d34672e5722bc7d51e876a0701e33"
+      },
+      "network": {},
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/LockstepNetwork/n15/seed7",
+      "sha256": {
+        "run_manifest.json": "0cd035baab631c874cc94d0914eb444b98ec89b244f73999a951760366392675",
+        "dag_metrics.json": "5bf559dc6ffc264dc32e771421f95d22436e7a7470ac2e8429fd543c67e04a36",
+        "Chain Data/dag_snapshot.json": "5291f88a6c03fe6dac263880d315304a727aa399c6cd44c413092341d1a9d7d7"
+      },
+      "network": {},
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/LockstepNetwork/n20/seed7",
+      "sha256": {
+        "run_manifest.json": "27140ee8dedb0e4daf4da37dc0e3245616fae0a83e59a832bbcc1de35c73b1b3",
+        "dag_metrics.json": "3dba849527b8cff5637ca1edddd065315d6708e3057521917210003eb59e3330",
+        "Chain Data/dag_snapshot.json": "cc6169635b9c550648db5a74db075ac667b4c1072f35f28a61b04c3953ae83f0"
+      },
+      "network": {},
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/LockstepNetwork/n25/seed7",
+      "sha256": {
+        "run_manifest.json": "139d4448efb43fa87d6dc7f10b42ed26fbb56e9493c4a249c8a8a892b7c97416",
+        "dag_metrics.json": "5e5200646db560b79a8ea809f9e24204a750a35deee3b42a8a50f743f202a349",
+        "Chain Data/dag_snapshot.json": "8f8236ad733ab0db10176435362e81ee7dcc3732a6c0366b9407780ea0c7a178"
+      },
+      "network": {},
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/LockstepNetwork/n30/seed7",
+      "sha256": {
+        "run_manifest.json": "bd785c3bc789f001d28da3577704036abe8b2f98a6ba957011bb0b33fec1f868",
+        "dag_metrics.json": "e258ad914ac390bd2b6c4057e6b4c0221cb3e156aa2e8ae371a897c28c9b37da",
+        "Chain Data/dag_snapshot.json": "3f382ad3a037d79e28d5aefa135ece05d240d4b9d0b70881078630ace0bfba6b"
+      },
+      "network": {},
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/LockstepNetwork/n35/seed7",
+      "sha256": {
+        "run_manifest.json": "02fba42642aa1f37279711a380246c6a12daf155c8ee4a9b8c39875c4950a558",
+        "dag_metrics.json": "8d413dec3e579772cdb22bba8104888ba140a739b1a9454c5fcf4cbcaac8e06d",
+        "Chain Data/dag_snapshot.json": "81ec34827cb94c37eb4732fdf381c36dd52d9da2d736253374932014a50b8d97"
+      },
+      "network": {},
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/LockstepNetwork/n40/seed7",
+      "sha256": {
+        "run_manifest.json": "5132d278406c7660b18f3d8be9f2e1157cf57b6402f555437bd3974fff0fcf32",
+        "dag_metrics.json": "d17a2c4bc4e8934cc072f3dd82cab61c2d92e6cb89d4b2909840139ceccf3052",
+        "Chain Data/dag_snapshot.json": "b15b76b1498c085d7c9c54d463ff49da35375b23095cb1d1fef1830eae305bad"
+      },
+      "network": {},
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/DeterPropNetwork/n5/seed7",
+      "sha256": {
+        "run_manifest.json": "bb761e1903453c38fe87d3d919b4242b412b9f751629ae251a75512cac39d602",
+        "dag_metrics.json": "6dec93e47e3517ec7a41753373d7cd70c2f50c5c12df66c01abd4d2f0cce5690",
+        "Chain Data/dag_snapshot.json": "5522bfc3c2271fd2d215d8b5770c2dd295cc5c03330beb258560c106ea9c653d"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/DeterPropNetwork/n10/seed7",
+      "sha256": {
+        "run_manifest.json": "31074facd7b6b930fa5baf30a7544da13e1786fd0217b8437bcca2bd4eb57034",
+        "dag_metrics.json": "d4300470a7c80bb96769483d6f25f1baf5afbc3002e9f9f34a99b153394ad315",
+        "Chain Data/dag_snapshot.json": "250a0d5b8382df3bec34e47d2e26ccb1f50953b6627af51d20b87ea013c6184f"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/DeterPropNetwork/n15/seed7",
+      "sha256": {
+        "run_manifest.json": "f245950f6ae4a60cdbcac6641210b9cd50a50749c235c7a414984ed17ebea361",
+        "dag_metrics.json": "a3431216752446782e5611b0e5ea80ebe161a155c160a5039b55102fa7b7a683",
+        "Chain Data/dag_snapshot.json": "ce75f35fdac8f3433548ca2a28256ffffc0468cf59d04c23425b156994447db1"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/DeterPropNetwork/n20/seed7",
+      "sha256": {
+        "run_manifest.json": "83bd0a0ab120aa90d275f576b5773f45388a5b13075a0e187d5cfb9c14bc95e8",
+        "dag_metrics.json": "b789267365bd1bd3d97e263b0ecd4c58c6d4f8f61c2c069265b4daae2a06b7d2",
+        "Chain Data/dag_snapshot.json": "1d7a8add4722fe7b2aeb90f255a664b8f5aa02e4e35e694cf2c4eeab90715cef"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/DeterPropNetwork/n25/seed7",
+      "sha256": {
+        "run_manifest.json": "0bf00deb1ab88926790bbc50cd83b3b1eeb491f6d93217e8fd3523ff6e8b7e90",
+        "dag_metrics.json": "769abb83fec63538e353794f4c8da59ff446ee702f97775e76acc0af5b11a408",
+        "Chain Data/dag_snapshot.json": "00da6e63349d1109ae21340f67cea0ef9260c7ec699ab52e695657103c8750e6"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/DeterPropNetwork/n30/seed7",
+      "sha256": {
+        "run_manifest.json": "db828cb4efd62735bfcf79c1e574b1e9688366beb5ce5451abd3a121c1cf5568",
+        "dag_metrics.json": "f4140d38afd2afdf6666c82bc88568f8c8fb14d23f4d7b4c2182be884a6cc563",
+        "Chain Data/dag_snapshot.json": "31c56366f1f8202d511383afa2234f34d428e82be53f091d5e7b0f0f814c6fc8"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/DeterPropNetwork/n35/seed7",
+      "sha256": {
+        "run_manifest.json": "bc6079dd7d09d31ff4475e95bf7afcb9eba679b479ae4d7deefe4e5e2daab091",
+        "dag_metrics.json": "7e5824d149d7c0ad952e3a328d64e86db4eee85de19c1ec62d3314a3eba00220",
+        "Chain Data/dag_snapshot.json": "613b5b2ca1db4a1377044c741610b45343df05ca776cf7281ac241a9321a3232"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/DeterPropNetwork/n40/seed7",
+      "sha256": {
+        "run_manifest.json": "0310fead45160dbf6752cf2d19d2392e71b0e1e87639515311fba7491d2a08b1",
+        "dag_metrics.json": "4fcd1f0274f72722c1e98250bfce3a9f30ac20baa614f81ad281ca0b492573c6",
+        "Chain Data/dag_snapshot.json": "254768d380f3b9d198ed874b8059e8c1a2d98970fe6d84f894586d0034b5ab7f"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/StochPropNetwork/n5/seed7",
+      "sha256": {
+        "run_manifest.json": "7f9fa9f2c237f7d33506abb6f9d693ff84e7570f5cccea8073edecc6c565ff92",
+        "dag_metrics.json": "b49d50e784d8663350d7516027785ac4a7303f1884e7f6f2b586ae9d2b3baffc",
+        "Chain Data/dag_snapshot.json": "a7aed988ef26640a72b960299dc66f5925e4461a3257d71270d63834d3724768"
+      },
+      "network": {
+        "rcvprob_inc": 0.25,
+        "rcvprob_start": 0.25,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/StochPropNetwork/n10/seed7",
+      "sha256": {
+        "run_manifest.json": "fd56b038b508793fc94af5569d6a8eaba53f8fd39c74006122a47d46e8cc3553",
+        "dag_metrics.json": "32542c4f028fd4c3cf69571b220726fbd540ff51b803c5d10e73f1f54ec3eba8",
+        "Chain Data/dag_snapshot.json": "90e17557051850a2936623c38db507d369d88da46da301b5ffc0bbfd9b727a9d"
+      },
+      "network": {
+        "rcvprob_inc": 0.25,
+        "rcvprob_start": 0.25,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/StochPropNetwork/n15/seed7",
+      "sha256": {
+        "run_manifest.json": "3db00ab36c9c512154f84bf097c363985c5ded4c4e9bd36ffc26766738827169",
+        "dag_metrics.json": "b8dac932188497a657dbf973d3118790c323c5adfe7006b888be8e77986ad705",
+        "Chain Data/dag_snapshot.json": "b0582fe90e2c6de14066fd431bd282bfa5b6b0980ab6106cba27e5b9ef6cc1c1"
+      },
+      "network": {
+        "rcvprob_inc": 0.25,
+        "rcvprob_start": 0.25,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/StochPropNetwork/n20/seed7",
+      "sha256": {
+        "run_manifest.json": "5ef23212f838b47304ca9b5ed013479bbad0bf34897b35a43358ddc5cafbbb54",
+        "dag_metrics.json": "66246ffd4df3db74cada9440ee0659a2f1c384f68336d529ee478f89638499df",
+        "Chain Data/dag_snapshot.json": "3380262c31193904709b31114ff4e0bfd3642c4f9f4f8e750f4d475313c2de20"
+      },
+      "network": {
+        "rcvprob_inc": 0.25,
+        "rcvprob_start": 0.25,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/StochPropNetwork/n25/seed7",
+      "sha256": {
+        "run_manifest.json": "f82d9828e19db970d00b3f171ec49f362e46f9c4f94b531b65170c59921f528f",
+        "dag_metrics.json": "e15c77a8619768c6a4b5c43945adc6e615a0ddc5511b2748a746861546d2b3c8",
+        "Chain Data/dag_snapshot.json": "7454a9aba670318450a675444f0454b8568e7cf0c1e3f71b7fd1182913d794bb"
+      },
+      "network": {
+        "rcvprob_inc": 0.25,
+        "rcvprob_start": 0.25,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/StochPropNetwork/n30/seed7",
+      "sha256": {
+        "run_manifest.json": "d8b64205959192b272ab3eb8b5a958a1f8959cafc03e20750980d0eca4a5f173",
+        "dag_metrics.json": "415e5e18e0e43414bd3f7a094b7fc528f3d5703934e11e1f6e6f5e72ef2ffba1",
+        "Chain Data/dag_snapshot.json": "322644f1c1fc80319091876b27d18435949a291860d7086a63325cdf334a5e43"
+      },
+      "network": {
+        "rcvprob_inc": 0.25,
+        "rcvprob_start": 0.25,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/StochPropNetwork/n35/seed7",
+      "sha256": {
+        "run_manifest.json": "e808761558147cf5568f82de1c986a18821c5b294bb46f38ab7f4ab35b20cd63",
+        "dag_metrics.json": "49a288f8de62f5a6b62824e6082f8d2211166cad9e3ccdc00558f5b3ee629c4e",
+        "Chain Data/dag_snapshot.json": "ee0f003718b95de859d279fd1f15f178120f44ab4e3472c08ad91bbee629b8eb"
+      },
+      "network": {
+        "rcvprob_inc": 0.25,
+        "rcvprob_start": 0.25,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/StochPropNetwork/n40/seed7",
+      "sha256": {
+        "run_manifest.json": "1effeae4af5a1410743f0f6d32f3c69fb57baed430f6d5f32aa87dfcdd5b4553",
+        "dag_metrics.json": "fde63d709408462c5d43b08797cde535c77169eade3d7e8d11781d7fa929c782",
+        "Chain Data/dag_snapshot.json": "cd00fc672ef2ffe158c5a40b69c6f675bb164134addf80247d7ef5c2afd04be6"
+      },
+      "network": {
+        "rcvprob_inc": 0.25,
+        "rcvprob_start": 0.25,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/TopologyNetwork/n5/seed7",
+      "sha256": {
+        "run_manifest.json": "2c46edf9c078397831e6b51d5de952b2ffa7d4e992f08b6229cbd55fa736196c",
+        "dag_metrics.json": "145746bc4b495f97ca4d6dfb4974287f8d8f1f093a1b3009365587eb74047eae",
+        "Chain Data/dag_snapshot.json": "741a44d281c4eb0c021100aa5b16a2b9deb3cc1f9c99da92cbc37d3f6080bd4b"
+      },
+      "network": {
+        "ave_degree": 4.0,
+        "avg_tp_change_interval": 10.0,
+        "bandwidth_adv": 0.5,
+        "bandwidth_honest": 0.5,
+        "dynamic": false,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "enable_resume_transfer": true,
+        "init_mode": "rand",
+        "max_allowed_partitions": 1.0,
+        "outage_prob": 0.01,
+        "rand_mode": "homogeneous",
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "show_label": false,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "topology_path": null
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/TopologyNetwork/n10/seed7",
+      "sha256": {
+        "run_manifest.json": "d50ca58d37249bccd5874c3936940a6cfe31e3b7d5cf8b71b6f2953183f302f4",
+        "dag_metrics.json": "fd23aae8efdf84f3a42a61f590ebc0f233c9792a141e0ce60416f7d4107cd6b8",
+        "Chain Data/dag_snapshot.json": "c30b742a9a278e19595d7972afee6e70c04b272d3870d69647da6a01647250b9"
+      },
+      "network": {
+        "ave_degree": 4.0,
+        "avg_tp_change_interval": 10.0,
+        "bandwidth_adv": 0.5,
+        "bandwidth_honest": 0.5,
+        "dynamic": false,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "enable_resume_transfer": true,
+        "init_mode": "rand",
+        "max_allowed_partitions": 1.0,
+        "outage_prob": 0.01,
+        "rand_mode": "homogeneous",
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "show_label": false,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "topology_path": null
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/TopologyNetwork/n15/seed7",
+      "sha256": {
+        "run_manifest.json": "e007f069ead797697c0a4c461c82f7978ccb21ea8a3494de54d1d7107ada973a",
+        "dag_metrics.json": "d92aaa2609a919076f986181de9faf4af36c4bb79184d6a3ad90f1ea9f02b907",
+        "Chain Data/dag_snapshot.json": "51ba49253719de67b1143f7373652b8dc36cc7fdb68feb1fba52f81e3822ff5b"
+      },
+      "network": {
+        "ave_degree": 4.0,
+        "avg_tp_change_interval": 10.0,
+        "bandwidth_adv": 0.5,
+        "bandwidth_honest": 0.5,
+        "dynamic": false,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "enable_resume_transfer": true,
+        "init_mode": "rand",
+        "max_allowed_partitions": 1.0,
+        "outage_prob": 0.01,
+        "rand_mode": "homogeneous",
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "show_label": false,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "topology_path": null
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/TopologyNetwork/n20/seed7",
+      "sha256": {
+        "run_manifest.json": "adf26accf3bd0d269c5715e4f03d9cd62872ec2f498320af4b6186771e6dab4c",
+        "dag_metrics.json": "5e742322b61dabf88a2fab2bed6181e7b39cd9c4c31df8018168e65ffdf69e45",
+        "Chain Data/dag_snapshot.json": "c15ac6c0be20640f2298b8ad6a52097fc2d4e4b7b8e03f97349cc718ddc75393"
+      },
+      "network": {
+        "ave_degree": 4.0,
+        "avg_tp_change_interval": 10.0,
+        "bandwidth_adv": 0.5,
+        "bandwidth_honest": 0.5,
+        "dynamic": false,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "enable_resume_transfer": true,
+        "init_mode": "rand",
+        "max_allowed_partitions": 1.0,
+        "outage_prob": 0.01,
+        "rand_mode": "homogeneous",
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "show_label": false,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "topology_path": null
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/TopologyNetwork/n25/seed7",
+      "sha256": {
+        "run_manifest.json": "c425e63b70a6880f00b5bfc6bb4799e7ce9ac8486b71d5e75f4c7d2b02f5c448",
+        "dag_metrics.json": "e1084c654740e8ee1258a5c3d9880dfd2ec693ddb43fff0d14d3b571419b3b54",
+        "Chain Data/dag_snapshot.json": "a1dd59c484771169f28f36ad0aa7989bd30e30ab51c56bc8868a302d6d5986f5"
+      },
+      "network": {
+        "ave_degree": 4.0,
+        "avg_tp_change_interval": 10.0,
+        "bandwidth_adv": 0.5,
+        "bandwidth_honest": 0.5,
+        "dynamic": false,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "enable_resume_transfer": true,
+        "init_mode": "rand",
+        "max_allowed_partitions": 1.0,
+        "outage_prob": 0.01,
+        "rand_mode": "homogeneous",
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "show_label": false,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "topology_path": null
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/TopologyNetwork/n30/seed7",
+      "sha256": {
+        "run_manifest.json": "80ddac6bc572f8a88af452a2b36fb0fc3686f331fb65ffdea3aed02a4618dad8",
+        "dag_metrics.json": "0ca539e6663429b8c12b88c9135529f03b0cfd1a5916bda0700e85a560f71507",
+        "Chain Data/dag_snapshot.json": "8a52f8600851d8df40499ad7f1952df7bf74eb99d273d45291bed76699bcb5a9"
+      },
+      "network": {
+        "ave_degree": 4.0,
+        "avg_tp_change_interval": 10.0,
+        "bandwidth_adv": 0.5,
+        "bandwidth_honest": 0.5,
+        "dynamic": false,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "enable_resume_transfer": true,
+        "init_mode": "rand",
+        "max_allowed_partitions": 1.0,
+        "outage_prob": 0.01,
+        "rand_mode": "homogeneous",
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "show_label": false,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "topology_path": null
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/TopologyNetwork/n35/seed7",
+      "sha256": {
+        "run_manifest.json": "7317dda00a1a1f9313faaf36b5493bfca92fe2a1f907de8c7eeed4df96f19e0f",
+        "dag_metrics.json": "413ffd852b68f4f23abff75a453e99678c270e195926de47f6a55f3f7dae16ec",
+        "Chain Data/dag_snapshot.json": "e3266b9343dc91db7d788e0661ad7de9132e0093eaa902a0dc390000819769aa"
+      },
+      "network": {
+        "ave_degree": 4.0,
+        "avg_tp_change_interval": 10.0,
+        "bandwidth_adv": 0.5,
+        "bandwidth_honest": 0.5,
+        "dynamic": false,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "enable_resume_transfer": true,
+        "init_mode": "rand",
+        "max_allowed_partitions": 1.0,
+        "outage_prob": 0.01,
+        "rand_mode": "homogeneous",
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "show_label": false,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "topology_path": null
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/TopologyNetwork/n40/seed7",
+      "sha256": {
+        "run_manifest.json": "544cfa8a242d015dbdfff8e3fa5e6d263c3d8112b7d16a97814e9c4de4a4c607",
+        "dag_metrics.json": "c4fca31b1b1b9f8d2853d5debeee0092b3f83ec6bc876b1b8b6b87f2fc01a672",
+        "Chain Data/dag_snapshot.json": "452939ee53fb529a4689afba819561155eb153a651d971a5d6576bd97a7216c0"
+      },
+      "network": {
+        "ave_degree": 4.0,
+        "avg_tp_change_interval": 10.0,
+        "bandwidth_adv": 0.5,
+        "bandwidth_honest": 0.5,
+        "dynamic": false,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "enable_resume_transfer": true,
+        "init_mode": "rand",
+        "max_allowed_partitions": 1.0,
+        "outage_prob": 0.01,
+        "rand_mode": "homogeneous",
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "show_label": false,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ],
+        "topology_path": null
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/AdHocNetwork/n5/seed7",
+      "sha256": {
+        "run_manifest.json": "071b0dc2b5956b86d2d20d3f09d7e12d1039cc3c785c4c6e1c9d974314934c6f",
+        "dag_metrics.json": "f5c7f60e3348fff2f3d4164b9f53e87fc131397220730911fd7846121a87240f",
+        "Chain Data/dag_snapshot.json": "5d2adc48587d9c8c7848ebe05807eb62f33d9cd4be7ec81a985bedfd862c4357"
+      },
+      "network": {
+        "ave_degree": 2.0,
+        "bandwidth_max": 5.0,
+        "comm_range": 70.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 1.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "medium",
+        "region_width": 100.0,
+        "segment_size": 0.05,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/AdHocNetwork/n10/seed7",
+      "sha256": {
+        "run_manifest.json": "bfdff72a8c2bf8425393fdbd0aa71d1f8c6518c0bf2c7109f6938be8a9962d56",
+        "dag_metrics.json": "0d165636fcc70107323f7939e37e0eea0433e5a3a5cbdf23e6f20665609f8562",
+        "Chain Data/dag_snapshot.json": "8db9f112b0473d6ef6a5e99a20c29ae821948e4e9a0f3423a6aedd79acc5e589"
+      },
+      "network": {
+        "ave_degree": 2.0,
+        "bandwidth_max": 5.0,
+        "comm_range": 70.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 1.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "medium",
+        "region_width": 100.0,
+        "segment_size": 0.05,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/AdHocNetwork/n15/seed7",
+      "sha256": {
+        "run_manifest.json": "129b19cadb54e83d2fc1a31d2e49c7048bcfd41d7fc83c2f98490c69eedd85d6",
+        "dag_metrics.json": "3bd199688c1804b5dea4560fcf3c034b9c86c714a6e3363323175acdbd9e0235",
+        "Chain Data/dag_snapshot.json": "c1f2aa8925a026791de4dce2dd3e049e6cf21e58a4fa6e6ef5eca3e9ef73e914"
+      },
+      "network": {
+        "ave_degree": 2.0,
+        "bandwidth_max": 5.0,
+        "comm_range": 70.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 1.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "medium",
+        "region_width": 100.0,
+        "segment_size": 0.05,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/AdHocNetwork/n20/seed7",
+      "sha256": {
+        "run_manifest.json": "a09ec5e66c0dbca3b04443cc29a4016ae48b472f56ca21c7695c141324e3cdb1",
+        "dag_metrics.json": "4bb1cc1093751ff13c2b9937e0058bc8df8139968e5627226813dc841f7e570c",
+        "Chain Data/dag_snapshot.json": "d62f089df318c0db6285b7a00627ab2ad2f8d89a9add6738399770dbacceb2da"
+      },
+      "network": {
+        "ave_degree": 2.0,
+        "bandwidth_max": 5.0,
+        "comm_range": 70.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 1.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "medium",
+        "region_width": 100.0,
+        "segment_size": 0.05,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/AdHocNetwork/n25/seed7",
+      "sha256": {
+        "run_manifest.json": "58e2aab1462fdd2c0935260826b38535645cad7e3c2d7c57c0ae8caae81df58f",
+        "dag_metrics.json": "9a9d0e304ffd90b9243d22708690de5542dfde0ca88a8e279fa28e43a802ef15",
+        "Chain Data/dag_snapshot.json": "0b8c5a0cb53f1bcc055c890cc4c32ff5d3f9571941700e624966675e91e3a29d"
+      },
+      "network": {
+        "ave_degree": 2.0,
+        "bandwidth_max": 5.0,
+        "comm_range": 70.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 1.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "medium",
+        "region_width": 100.0,
+        "segment_size": 0.05,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/AdHocNetwork/n30/seed7",
+      "sha256": {
+        "run_manifest.json": "e3337f80ca9cfba9cf733c87b6db5a929012fbd9bfa9154a379cb4ea288e6738",
+        "dag_metrics.json": "4085d47b7e47710f8406e41f2008bf2626b94c4f1c9b85a04002f9e36331507e",
+        "Chain Data/dag_snapshot.json": "5f1a3ece2f0f78efd5ac2bb11dfae7d93867c9bfd5b7fbc510a3a0b8699d0129"
+      },
+      "network": {
+        "ave_degree": 2.0,
+        "bandwidth_max": 5.0,
+        "comm_range": 70.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 1.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "medium",
+        "region_width": 100.0,
+        "segment_size": 0.05,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/AdHocNetwork/n35/seed7",
+      "sha256": {
+        "run_manifest.json": "6b9c2cdd09aca0772c7b4a12a69f78a8b6ff2f18ac19c7cd47a35e607072ae56",
+        "dag_metrics.json": "1def606d5ad75bb20c3282ea70fbff7f690e6601362f77c1a71433470f99891c",
+        "Chain Data/dag_snapshot.json": "9c86a8a50a100480d20d006b1aa63990d69c47c9152a651199c9ccfaadab8833"
+      },
+      "network": {
+        "ave_degree": 2.0,
+        "bandwidth_max": 5.0,
+        "comm_range": 70.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 1.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "medium",
+        "region_width": 100.0,
+        "segment_size": 0.05,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "miners/DAG/AdHocNetwork/n40/seed7",
+      "sha256": {
+        "run_manifest.json": "20ba978206406c8cc5f707c4f79b23e081634369079248e74470431802c32cc1",
+        "dag_metrics.json": "6369d5fe92d617a3a40b8161e67c65189cec4ea007bfbd9e3cd8f7c06483339b",
+        "Chain Data/dag_snapshot.json": "c21befa47bd6da533fc8f7d24f068326c321077b55bf3172d21a43e113a417b4"
+      },
+      "network": {
+        "ave_degree": 2.0,
+        "bandwidth_max": 5.0,
+        "comm_range": 70.0,
+        "enable_large_scale_fading": true,
+        "init_mode": "rand",
+        "move_variance": 1.0,
+        "outage_prob": 0.01,
+        "path_loss_level": "medium",
+        "region_width": 100.0,
+        "segment_size": 0.05,
+        "stat_prop_times": [
+          0.5,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    }
+  ],
+  "source_results_root": "Results/honest_cli_run01",
+  "source_observations_sha256": "0bb2b1a5122402439bbf46b962b8ccb254509850859d3490cd5510059f16aaa0"
+}

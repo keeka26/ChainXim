@@ -1,0 +1,589 @@
+{
+  "schema_version": "chainxim_honest_plot_audit_v3",
+  "grid": {
+    "schema_version": "chainxim_honest_analysis_grid_v1",
+    "fixed": {
+      "rounds": 30000,
+      "miners": 10,
+      "q": 5,
+      "difficulty": 8,
+      "blocksize": 1.0
+    },
+    "axes": {
+      "miners": [
+        10
+      ],
+      "hashrate": [
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20
+      ],
+      "difficulty": [
+        8
+      ],
+      "blocksize": [
+        1.0
+      ]
+    },
+    "networks": [
+      "LockstepNetwork",
+      "DeterPropNetwork",
+      "StochPropNetwork",
+      "TopologyNetwork",
+      "AdHocNetwork"
+    ],
+    "seeds": [
+      7
+    ],
+    "losses": [
+      "low",
+      "medium",
+      "high"
+    ]
+  },
+  "throughput": "both",
+  "case_throughput": {
+    "hashrate": "both"
+  },
+  "ledger_scope": {
+    "Bitcoin": "original num_of_valid_blocks / mining rounds",
+    "DAG": "all-node order longest common prefix at mining end / mining rounds, excluding genesis; current agreement, not finality"
+  },
+  "throughput_scopes": {
+    "total": "both protocols: all generated non-genesis blocks / actual mining rounds",
+    "eventual": "potential utilization proxy: Bitcoin original main count / rounds; DAG generated / rounds assuming valid blocks eventually disseminate and enter the order; not measured network capacity",
+    "current_order": "Bitcoin original main count / rounds; DAG all-node order common prefix / rounds",
+    "bitcoin_original_main": "num_of_valid_blocks unchanged: common prefix of global selected chain and height-selected honest nodes, controlled by consensus_miner_quantile; default -1 selects one longest honest node",
+    "reference_ordered": "DAG reference-node metric retained for local diagnostics; not used for the common-order curve"
+  },
+  "grid_source": "cli",
+  "grid_sha256": "39cb39bb413076370a2abf97fd3b87868497d07fe74714bab40482f020805016",
+  "observed_points": 20,
+  "missing_points": [],
+  "files": [
+    "hashrate_throughput_comparison_blocks.png",
+    "hashrate_throughput_comparison_blocks.pdf"
+  ],
+  "seed_band": "observed min/max, not confidence interval; deterministic PoW seeds need not be independent",
+  "inputs": [
+    {
+      "path": "hashrate/Bitcoin/DeterPropNetwork/q2/seed7",
+      "sha256": {
+        "parameters.txt": "e31ee7c63ed10f2fdd2ea9a95f8f6464bc753e5cc7e8f36f3954aaca0b0944a2",
+        "evaluation results.txt": "7609e283e60b13e9226a0572c146b705fbb02033d3761818407813cfb000675d",
+        "Chain Data/chain_data.txt": "f7078331bad705a796079e8e5edc909900bc9795d788580918a09570fbab6460",
+        "Network Results/network_attributes.txt": "fcd9cc7c23dd7c15d2381f0e53e10049a34f229b45a91c7919e1fc1f0329c437"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "hashrate/Bitcoin/DeterPropNetwork/q4/seed7",
+      "sha256": {
+        "parameters.txt": "fab4fe309f93cdf46eb21c94f701bc33f422b8f4239826e11853dd071a09017f",
+        "evaluation results.txt": "8f8467a3957d529ee696ab91c9b065c6c51af298bebff7e36861e96d3b5a572c",
+        "Chain Data/chain_data.txt": "3c8c3292fcd16b9c3c0d655b9125d3cda0e084e1a9561895359468dfd04b5d35",
+        "Network Results/network_attributes.txt": "fcd9cc7c23dd7c15d2381f0e53e10049a34f229b45a91c7919e1fc1f0329c437"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "hashrate/Bitcoin/DeterPropNetwork/q6/seed7",
+      "sha256": {
+        "parameters.txt": "d7f1442b04c98d329a05e0a88f36f290a5c147d2bb985a7c7ad5caf451919da0",
+        "evaluation results.txt": "523d35f975f880356b07ea678bcafd9fcb97db0b49e2cc0980ccfdc45fa17081",
+        "Chain Data/chain_data.txt": "f37b6ec50c26c4967d4ab355e1970e396ab9f43b0f486130184f0967a9e67e18",
+        "Network Results/network_attributes.txt": "fcd9cc7c23dd7c15d2381f0e53e10049a34f229b45a91c7919e1fc1f0329c437"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "hashrate/Bitcoin/DeterPropNetwork/q8/seed7",
+      "sha256": {
+        "parameters.txt": "b3f22f0cf1bcb23fc125dcb8d30788dc54c2873997590fdd0051795d407f18ef",
+        "evaluation results.txt": "8d8e5304a076c389ad6f0591411559fe8551851300036ea8a2d00929e49fce4b",
+        "Chain Data/chain_data.txt": "51220edf127af687af2d0f2a9837e97677735cebe28f2aa59a9a90a347b82be7",
+        "Network Results/network_attributes.txt": "fcd9cc7c23dd7c15d2381f0e53e10049a34f229b45a91c7919e1fc1f0329c437"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "hashrate/Bitcoin/DeterPropNetwork/q10/seed7",
+      "sha256": {
+        "parameters.txt": "ea3e918046ddc3448c77987b14df7013e65fef735f84e8383b1cdc40fcba0da1",
+        "evaluation results.txt": "c0fd37e770667bee8c63e3555de8acbcb5c4c4946afb5dd4cfe29d11f3f60a0d",
+        "Chain Data/chain_data.txt": "5b5bd117aa8142b8af0bfefe35ec71bba2e95cf8e57b935e3dc3af5715218b7c",
+        "Network Results/network_attributes.txt": "fcd9cc7c23dd7c15d2381f0e53e10049a34f229b45a91c7919e1fc1f0329c437"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "hashrate/Bitcoin/DeterPropNetwork/q12/seed7",
+      "sha256": {
+        "parameters.txt": "50a4db2c9053037bae5e29dc2d83f4e8b0a7f643752bac011d4c8da031485fb8",
+        "evaluation results.txt": "5c0a613e87bd3066af7f3de58b33756247b0e0dbf76b10da2ef92f655929f8b6",
+        "Chain Data/chain_data.txt": "94120dcee1d7b52ba216b9459dc9d1f746f160065fc0f531834154e596d2e911",
+        "Network Results/network_attributes.txt": "fcd9cc7c23dd7c15d2381f0e53e10049a34f229b45a91c7919e1fc1f0329c437"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "hashrate/Bitcoin/DeterPropNetwork/q14/seed7",
+      "sha256": {
+        "parameters.txt": "859ad885b26154f599e3e2b420c6f2f559c8cd8f6087d2798ec649c3679f0732",
+        "evaluation results.txt": "dda6d6646e04c37b78b93d16c51fd522eb0598161a6cfa56c2c881a75a315463",
+        "Chain Data/chain_data.txt": "b08036805881b50f1d3390bd759b2113498c17b3bb41a6a0e3fb2d33fea7344e",
+        "Network Results/network_attributes.txt": "fcd9cc7c23dd7c15d2381f0e53e10049a34f229b45a91c7919e1fc1f0329c437"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "hashrate/Bitcoin/DeterPropNetwork/q16/seed7",
+      "sha256": {
+        "parameters.txt": "9290697d1db3f43d1d57c1a475b71ac1518bb4e2413a33e7deaf06f0c13165be",
+        "evaluation results.txt": "c79d26ed4421bb39a662f524c550c8312efbb0ac423a5c14b18ee2b0fde4bfa1",
+        "Chain Data/chain_data.txt": "3937954d375f10cb18a164bc576542ea273650fcb0e89754a67afcf5733cb17a",
+        "Network Results/network_attributes.txt": "fcd9cc7c23dd7c15d2381f0e53e10049a34f229b45a91c7919e1fc1f0329c437"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "hashrate/Bitcoin/DeterPropNetwork/q18/seed7",
+      "sha256": {
+        "parameters.txt": "730542af2c43eb5ff0adf6c43216ea84fb3bea5d574e1b70f83c3688f7b3da49",
+        "evaluation results.txt": "918f326a5c4377c790827ab7bbbec0d35ddc96f3b69b1ab296efae6831dd1b4b",
+        "Chain Data/chain_data.txt": "74dcc14ce92b4797f1a672b2ae0299eded2efd1db69ac1be03de90b0b38542ad",
+        "Network Results/network_attributes.txt": "fcd9cc7c23dd7c15d2381f0e53e10049a34f229b45a91c7919e1fc1f0329c437"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "hashrate/Bitcoin/DeterPropNetwork/q20/seed7",
+      "sha256": {
+        "parameters.txt": "28ae24b577b694dfa7f9b6e15da6708cf4f7225f418d38c730a04ef6bf1295cc",
+        "evaluation results.txt": "9972c3c892c5e2df5c195e40c3300a3cc4b6f1093b74ca276c30a703a7f279b4",
+        "Chain Data/chain_data.txt": "456674673c74fa175eb5511355b3797663e2f3336db2dbd613c2e0af2d164c1e",
+        "Network Results/network_attributes.txt": "fcd9cc7c23dd7c15d2381f0e53e10049a34f229b45a91c7919e1fc1f0329c437"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "hashrate/DAG/DeterPropNetwork/q2/seed7",
+      "sha256": {
+        "run_manifest.json": "792c9820fc74ceccab3f6ce543edf32168070dc939354d8964a0bc5165da3b38",
+        "dag_metrics.json": "b5f81fedb221961129d82a17ac6fdf7852880d6160d16b957ce86bd4421136ae",
+        "Chain Data/dag_snapshot.json": "8c160f5d9e219653c30bfff5dfcc5cfefce0c6c1d56d183c85e20332d025a666"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "hashrate/DAG/DeterPropNetwork/q4/seed7",
+      "sha256": {
+        "run_manifest.json": "c4ad4fea6d2a8fe6ae5fea6c96ac57023356b7cdb072cf5af2f0405254f0bb1d",
+        "dag_metrics.json": "4d01260bb2f3ab4a41f5af09b1723e3a9173276d1369d48042a83970fb5d4ba6",
+        "Chain Data/dag_snapshot.json": "c129504ff5368adf2f6aa85c0218ea26dc83bd17655a2a23e21a56b37bea1c8a"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "hashrate/DAG/DeterPropNetwork/q6/seed7",
+      "sha256": {
+        "run_manifest.json": "d1a1e9ac6710e5526371280032bf774d74aa5ce905c1a8ba0d6a03ca4d62ef0e",
+        "dag_metrics.json": "c04cacaa77b963f8d3c0735d488be355301a2703427d00b53c8e7d87bafab576",
+        "Chain Data/dag_snapshot.json": "1d0872f63094cb28798ef427da01c375bd076b9b0d1d204997f252c683fc079e"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "hashrate/DAG/DeterPropNetwork/q8/seed7",
+      "sha256": {
+        "run_manifest.json": "7db0d3a53fa35188d8c47dd816c1555186ca8416f6012bcabc38e44922324c2b",
+        "dag_metrics.json": "415b33fdc4499133105e13d623f4a395c584cc7afbd685a486bfbb5939a49ef5",
+        "Chain Data/dag_snapshot.json": "25cb52fe18037edea5223d5bfa751b1b88911940b482e07299f5e3a1628288b3"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "hashrate/DAG/DeterPropNetwork/q10/seed7",
+      "sha256": {
+        "run_manifest.json": "3fe45bc191e25ec9eba374bb9360c8377f8aac997e7400f8c762f48eb45bb812",
+        "dag_metrics.json": "7fc2264b6d30df78580d321dedea6d5f9f84859c90c9b7de5c0ff6ef22fc699d",
+        "Chain Data/dag_snapshot.json": "128d759be9b353dfb2e78c048402c98e670e41a1aca0088ea6f1d76f61277b55"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "hashrate/DAG/DeterPropNetwork/q12/seed7",
+      "sha256": {
+        "run_manifest.json": "59002c0d114decda7e973f5fc2d5023988e226a9bdc80ea11d1d98b81706986b",
+        "dag_metrics.json": "b9f89f96ca8c749beb42fe3d7a92be9fa308435a6f0062dca4e12f90371f42f1",
+        "Chain Data/dag_snapshot.json": "d2d758f7d178d46d5b3fcb5b20afc623ad66b5a2a01706c1339d089616aa19dd"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "hashrate/DAG/DeterPropNetwork/q14/seed7",
+      "sha256": {
+        "run_manifest.json": "62221eee53008e73df5c3c828dca66a528e27f3383f8acecb103c00b0976f378",
+        "dag_metrics.json": "6e136493edbf2e08bddf40dfaf61fb9858db221863b40d0d75e4b57edea90844",
+        "Chain Data/dag_snapshot.json": "7ddf1d0bf2d98a1bde291da0c630e2e7b140f85da54608721530c0946ecca966"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "hashrate/DAG/DeterPropNetwork/q16/seed7",
+      "sha256": {
+        "run_manifest.json": "94c2b60a2ac0839d94574b4742e788c16e23f2588bf01e682306c25f67a3b0ed",
+        "dag_metrics.json": "5872a5016f609887f3c25b743dcc91767611cc55e405961b25a530997f242212",
+        "Chain Data/dag_snapshot.json": "8d2cce8706d7a328025ae71b4a1cd19b4174822368247fe946439a2f1ae19a33"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "hashrate/DAG/DeterPropNetwork/q18/seed7",
+      "sha256": {
+        "run_manifest.json": "35129aac7df24bb257b32545fba38580111ca5055f0331a044888ccb49296059",
+        "dag_metrics.json": "30961fa2665848249b4257e8959d0e68189ab52b5e2d7cb512deaeaffcf9b833",
+        "Chain Data/dag_snapshot.json": "9f8ef4a5e77ce7473e98d7353dbd22a224805ad94f853721a277b8918a2531b5"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "hashrate/DAG/DeterPropNetwork/q20/seed7",
+      "sha256": {
+        "run_manifest.json": "7419032fd48ca9f11c8d68a6ce70362aa099565aa3c5b962d7edc6e493206d0a",
+        "dag_metrics.json": "a15151945a9450df530546a4e26acf68e058daa222e2f56d5fa2388e4047bf2c",
+        "Chain Data/dag_snapshot.json": "c5e7b4db648fe37dc824bbea3a1ab69154f74ede5db393b44eae0862a74513f5"
+      },
+      "network": {
+        "prop_vector": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    }
+  ],
+  "source_results_root": "Results/honest_cli_run01",
+  "source_observations_sha256": "a44f9faf82a974462439d3b11cdb6aa1f2798c595f81c664999a87a8eef19f1b"
+}

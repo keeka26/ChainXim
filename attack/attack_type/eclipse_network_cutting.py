@@ -23,6 +23,7 @@ class EclipseNetworkCutting(aa.AttackType):
         self._fork_block: Block = None
         self._simplifylog = {}
 
+    # 原子接口参数采用adver_list；无global_chain/network入参。
     def renew_stage(self,round):
         ## 1. renew stage
         newest_block, mine_input,incoming_block_from_eclipse = self.behavior.renew(adver_list = self.adver_list, 
@@ -36,19 +37,19 @@ class EclipseNetworkCutting(aa.AttackType):
         current_miner = random.choice(self.adver_list)
         if self.honest_chain.get_height() > self.adver_chain.get_height():       
             self._fork_block = self.behavior.adopt(adver_chain = self.adver_chain, honest_chain = self.honest_chain)
-        attack_mine,block = self.behavior.mine(miner_list = self.adver_list,
+        attack_mine,block = self.behavior.mine(adver_list = self.adver_list,
                                          current_miner = current_miner,
                                          miner_input = mine_input,
                                          adver_chain = self.adver_chain,
-                                         global_chain = self.global_chain, 
+
                                          consensus = self.adver_consensus,
                                          round = round)
         if attack_mine:
-            self.behavior.upload(network = self.network, 
+            self.behavior.upload( 
                                  adver_chain = self.adver_chain,
                                  current_miners = [current_miner],
                                  round = round,
-                                 miner_list = self.adver_list,
+                                 adver_list = self.adver_list,
                                  fork_block = self._fork_block,
                                  syncLocalChain = True)
         else:
@@ -56,7 +57,7 @@ class EclipseNetworkCutting(aa.AttackType):
 
     def clear_record_stage(self,round):
         ## 3. clear and record stage
-        self.behavior.clear(miner_list = self.adver_list)# 清空
+        self.behavior.clear(adver_list = self.adver_list)# 清空
         # self._log['round'] = round
         self._log['honest_chain'] = self.honest_chain.last_block.name + ' Height:' + str(self.honest_chain.last_block.height)
         self._log['adver_chain'] = self.adver_chain.last_block.name + ' Height:' + str(self.adver_chain.last_block.height)
@@ -73,17 +74,18 @@ class EclipseNetworkCutting(aa.AttackType):
         self.clear_record_stage(round)
         
         
-    def info_getter(self):
+    def info_getter(self,miner_num=None):
         
-        loop_block = self.global_chain.last_block
+        # 策略原本没有global_chain；统计联盟实际已知视图。
+        loop_block = self.adver_chain.last_block
         main_chain_height = loop_block.height
         adver_block_num = 0
         while(loop_block):
             if loop_block.isAdversaryBlock:
                 adver_block_num += 1
             loop_block = loop_block.parentblock
-        return {'Success Rate': '{:.4f}'.format(adver_block_num/main_chain_height),
-                'Theory rate in LockstepNetwork': '{:.4f}'.format(len(self.adver_list)/len(self.miner_list))}
+        return {'Success Rate': '{:.4f}'.format(adver_block_num/max(1,main_chain_height)),
+                'Theory rate in LockstepNetwork': '{:.4f}'.format(len(self.adver_list)/(miner_num or global_var.get_miner_num()))}
     
 
     def resultlog2txt(self,round):

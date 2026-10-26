@@ -1,0 +1,805 @@
+{
+  "schema_version": "chainxim_honest_plot_audit_v3",
+  "grid": {
+    "schema_version": "chainxim_honest_analysis_grid_v1",
+    "fixed": {
+      "rounds": 3000,
+      "miners": 6,
+      "q": 5,
+      "difficulty": 8,
+      "blocksize": 1.0
+    },
+    "axes": {
+      "miners": [
+        6
+      ],
+      "hashrate": [
+        5
+      ],
+      "difficulty": [
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16
+      ],
+      "blocksize": [
+        1.0
+      ]
+    },
+    "networks": [
+      "LockstepNetwork",
+      "DeterPropNetwork",
+      "StochPropNetwork",
+      "TopologyNetwork",
+      "AdHocNetwork"
+    ],
+    "seeds": [
+      7
+    ],
+    "losses": [
+      "low",
+      "medium",
+      "high"
+    ]
+  },
+  "throughput": "both",
+  "case_throughput": {
+    "difficulty": "both"
+  },
+  "ledger_scope": {
+    "Bitcoin": "original num_of_valid_blocks / mining rounds",
+    "DAG": "all-node order longest common prefix at mining end / mining rounds; metrics summary or legacy snapshot, excluding genesis; current agreement, not finality"
+  },
+  "throughput_scopes": {
+    "total": "both protocols: all generated non-genesis blocks / actual mining rounds",
+    "eventual": "potential utilization proxy: Bitcoin original main count / rounds; DAG generated / rounds assuming valid blocks eventually disseminate and enter the order; not measured network capacity",
+    "current_order": "Bitcoin original main count / rounds; DAG all-node order common prefix / rounds",
+    "bitcoin_original_main": "num_of_valid_blocks unchanged: common prefix of global selected chain and height-selected honest nodes, controlled by consensus_miner_quantile; default -1 selects one longest honest node",
+    "reference_ordered": "DAG reference-node metric retained for local diagnostics; not used for the common-order curve"
+  },
+  "grid_source": "cli",
+  "grid_sha256": "de9ebfaee1218b544a136fd2420a6ca9560211715b9dbbd9038a242fbddb42a4",
+  "observed_points": 16,
+  "missing_points": [],
+  "files": [
+    "difficulty_throughput_comparison_blocks.png",
+    "difficulty_throughput_comparison_blocks.pdf"
+  ],
+  "seed_band": "observed min/max, not confidence interval; deterministic PoW seeds need not be independent",
+  "inputs": [
+    {
+      "path": "difficulty/Bitcoin/TopologyNetwork/d2/seed7",
+      "sha256": {
+        "parameters.txt": "ea7ff7eb59fc7e3cd8a561c87ef774325466ef48d6347ea65370892cd57f7efd",
+        "evaluation results.txt": "8bde0b32352250ffa4cbaf213e1772efac58fd929581a7ab401614157b2cd9b4",
+        "Chain Data/chain_data.txt": "9d50a6c70434a51f5b2412ec6a7186d12a87d4aa4ca21800d4980404f808850e"
+      },
+      "network": {
+        "show_label": false,
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "dynamic": false,
+        "enable_resume_transfer": true,
+        "ave_degree": 4.0,
+        "bandwidth_honest": 5.0,
+        "bandwidth_adv": 5.0,
+        "outage_prob": 0.0,
+        "avg_tp_change_interval": 10.0,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "max_allowed_partitions": 1.0,
+        "init_mode": "rand",
+        "topology_path": "conf/topologies/circular32_coo.csv",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "rand_mode": "binomial"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "difficulty/Bitcoin/TopologyNetwork/d4/seed7",
+      "sha256": {
+        "parameters.txt": "b440f31f9d7cf081d3aa15736dae0cc7c82172f88f5067c8e1a9b577593499f8",
+        "evaluation results.txt": "33060e50d9b084495730664c9773b57b424995fe4067a8df71f19939e1df48bb",
+        "Chain Data/chain_data.txt": "b6ff33ec113d5b4cb48fbdedf323e5752fa9f0f9111ddf246e7bfc4f79516a47"
+      },
+      "network": {
+        "show_label": false,
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "dynamic": false,
+        "enable_resume_transfer": true,
+        "ave_degree": 4.0,
+        "bandwidth_honest": 5.0,
+        "bandwidth_adv": 5.0,
+        "outage_prob": 0.0,
+        "avg_tp_change_interval": 10.0,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "max_allowed_partitions": 1.0,
+        "init_mode": "rand",
+        "topology_path": "conf/topologies/circular32_coo.csv",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "rand_mode": "binomial"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "difficulty/Bitcoin/TopologyNetwork/d6/seed7",
+      "sha256": {
+        "parameters.txt": "c09e70b731b9a30d0c36ed46bd3f7e837399ee63e7cc3c274915eeecf91425a5",
+        "evaluation results.txt": "058772a079797098b9d347bd9ef4ec7e38481cb2a9c4ca669635ea80bb45aca5",
+        "Chain Data/chain_data.txt": "6d1beb9f07fdca91a84d3b22625d5afeec39c7c832b4d0fc7d7a4d5df41101f8"
+      },
+      "network": {
+        "show_label": false,
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "dynamic": false,
+        "enable_resume_transfer": true,
+        "ave_degree": 4.0,
+        "bandwidth_honest": 5.0,
+        "bandwidth_adv": 5.0,
+        "outage_prob": 0.0,
+        "avg_tp_change_interval": 10.0,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "max_allowed_partitions": 1.0,
+        "init_mode": "rand",
+        "topology_path": "conf/topologies/circular32_coo.csv",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "rand_mode": "binomial"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "difficulty/Bitcoin/TopologyNetwork/d8/seed7",
+      "sha256": {
+        "parameters.txt": "b2771a6ff4b52e9a5c847fca581a94d123e25e30cbe1face7be083276d3af71c",
+        "evaluation results.txt": "ebccb42feb273c648ee26f4c67affd9aaf7d56438bab9eb0bf84a865638ca8a9",
+        "Chain Data/chain_data.txt": "2fe8eac73e6a5159ad7ee3bc12d57d5430add102a6cc013ebf56b27960d7fc42"
+      },
+      "network": {
+        "show_label": false,
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "dynamic": false,
+        "enable_resume_transfer": true,
+        "ave_degree": 4.0,
+        "bandwidth_honest": 5.0,
+        "bandwidth_adv": 5.0,
+        "outage_prob": 0.0,
+        "avg_tp_change_interval": 10.0,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "max_allowed_partitions": 1.0,
+        "init_mode": "rand",
+        "topology_path": "conf/topologies/circular32_coo.csv",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "rand_mode": "binomial"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "difficulty/Bitcoin/TopologyNetwork/d10/seed7",
+      "sha256": {
+        "parameters.txt": "922411ff151a732d39d51ad0441afad4bcea92ad02ec34155797d180d7066447",
+        "evaluation results.txt": "42c965f778bd94b3ef37f311b5aff48040bd89cb2191e0262989907edbfe433d",
+        "Chain Data/chain_data.txt": "d30f1c466c9c1e90918a7b9b519735e37253ae62154f554ec4517be19c1e8684"
+      },
+      "network": {
+        "show_label": false,
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "dynamic": false,
+        "enable_resume_transfer": true,
+        "ave_degree": 4.0,
+        "bandwidth_honest": 5.0,
+        "bandwidth_adv": 5.0,
+        "outage_prob": 0.0,
+        "avg_tp_change_interval": 10.0,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "max_allowed_partitions": 1.0,
+        "init_mode": "rand",
+        "topology_path": "conf/topologies/circular32_coo.csv",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "rand_mode": "binomial"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "difficulty/Bitcoin/TopologyNetwork/d12/seed7",
+      "sha256": {
+        "parameters.txt": "79162edd56508f47a38a7830abebbabd9041aefa12c45a9816425ff51a25f5e0",
+        "evaluation results.txt": "d5504f8ad4eb3dc8385d2bae2037a9de7723fc1634eb02f15a57e700eba72786",
+        "Chain Data/chain_data.txt": "0d6aa20d780b1d88d82c0a170fcfae0fa68a00775198a480403af336b05e99d1"
+      },
+      "network": {
+        "show_label": false,
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "dynamic": false,
+        "enable_resume_transfer": true,
+        "ave_degree": 4.0,
+        "bandwidth_honest": 5.0,
+        "bandwidth_adv": 5.0,
+        "outage_prob": 0.0,
+        "avg_tp_change_interval": 10.0,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "max_allowed_partitions": 1.0,
+        "init_mode": "rand",
+        "topology_path": "conf/topologies/circular32_coo.csv",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "rand_mode": "binomial"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "difficulty/Bitcoin/TopologyNetwork/d14/seed7",
+      "sha256": {
+        "parameters.txt": "cbd5c0f272eea1d437e2199d8ffcd74fa515dcf4ed61b2ba7aad39e773212558",
+        "evaluation results.txt": "03e555a344849804cd692ca90f5d34e8ea69560420bb1d89c44be929d49f966a",
+        "Chain Data/chain_data.txt": "fc9da324b26405a8442da4bbe53b65b091a6d5c760451ef0e146f6c872213b6e"
+      },
+      "network": {
+        "show_label": false,
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "dynamic": false,
+        "enable_resume_transfer": true,
+        "ave_degree": 4.0,
+        "bandwidth_honest": 5.0,
+        "bandwidth_adv": 5.0,
+        "outage_prob": 0.0,
+        "avg_tp_change_interval": 10.0,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "max_allowed_partitions": 1.0,
+        "init_mode": "rand",
+        "topology_path": "conf/topologies/circular32_coo.csv",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "rand_mode": "binomial"
+      },
+      "seed_verified": false,
+      "target_verified": true,
+      "target_source": "ordinary_block_headers"
+    },
+    {
+      "path": "difficulty/Bitcoin/TopologyNetwork/d16/seed7",
+      "sha256": {
+        "parameters.txt": "0db937ab78df920b3fa5f470343015260429cca31ccc38a70af2c46f8d5bd9d9",
+        "evaluation results.txt": "53148f9d44a45dfb56da626cb5c17fa1c94ff08fd364df46f0cfccb5ea59cc1f",
+        "Chain Data/chain_data.txt": "1cdd219275f44e01cda328570409c090dd94eb948e997cf9f1bf4fcc264d878a"
+      },
+      "network": {
+        "show_label": false,
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "dynamic": false,
+        "enable_resume_transfer": true,
+        "ave_degree": 4.0,
+        "bandwidth_honest": 5.0,
+        "bandwidth_adv": 5.0,
+        "outage_prob": 0.0,
+        "avg_tp_change_interval": 10.0,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "max_allowed_partitions": 1.0,
+        "init_mode": "rand",
+        "topology_path": "conf/topologies/circular32_coo.csv",
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "rand_mode": "binomial"
+      },
+      "seed_verified": false,
+      "target_verified": false,
+      "target_source": "truncated_parameters_only_zero_blocks"
+    },
+    {
+      "path": "difficulty/DAG/TopologyNetwork/d2/seed7",
+      "sha256": {
+        "run_manifest.json": "b67353392da43339fdb900c37b3143db8cb9accd8008dfcb1d3e579760dce2af",
+        "dag_metrics.json": "1eec32e07237fb2b1aa213c3828a162adfc27ad83c7f5ddb26105cd425b28fad"
+      },
+      "network": {
+        "ave_degree": 4.0,
+        "avg_tp_change_interval": 10.0,
+        "bandwidth_adv": 5.0,
+        "bandwidth_honest": 5.0,
+        "dynamic": false,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "enable_resume_transfer": true,
+        "init_mode": "rand",
+        "max_allowed_partitions": 1.0,
+        "outage_prob": 0.0,
+        "rand_mode": "binomial",
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "show_label": false,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "topology_path": "conf/topologies/circular32_coo.csv"
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "difficulty/DAG/TopologyNetwork/d4/seed7",
+      "sha256": {
+        "run_manifest.json": "ed7e2d0eb6f37352d00c7d00cd67383573807e57e9c960c34bf1e36ed3154901",
+        "dag_metrics.json": "74662c2517b75908a0f1d3406655bb3d76b637278a8d99b9e8ec1e1ef409fc4c"
+      },
+      "network": {
+        "ave_degree": 4.0,
+        "avg_tp_change_interval": 10.0,
+        "bandwidth_adv": 5.0,
+        "bandwidth_honest": 5.0,
+        "dynamic": false,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "enable_resume_transfer": true,
+        "init_mode": "rand",
+        "max_allowed_partitions": 1.0,
+        "outage_prob": 0.0,
+        "rand_mode": "binomial",
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "show_label": false,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "topology_path": "conf/topologies/circular32_coo.csv"
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "difficulty/DAG/TopologyNetwork/d6/seed7",
+      "sha256": {
+        "run_manifest.json": "004fca466a11f73ee2e1666fa5cc6f1ec81c3ee8e19dca5c95eb940e2ce5f318",
+        "dag_metrics.json": "dd710b4302640674e2764db1edf760bde36bdcf75bf527ae695332d285218fca"
+      },
+      "network": {
+        "ave_degree": 4.0,
+        "avg_tp_change_interval": 10.0,
+        "bandwidth_adv": 5.0,
+        "bandwidth_honest": 5.0,
+        "dynamic": false,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "enable_resume_transfer": true,
+        "init_mode": "rand",
+        "max_allowed_partitions": 1.0,
+        "outage_prob": 0.0,
+        "rand_mode": "binomial",
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "show_label": false,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "topology_path": "conf/topologies/circular32_coo.csv"
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "difficulty/DAG/TopologyNetwork/d8/seed7",
+      "sha256": {
+        "run_manifest.json": "32364ef6d3116589bb805ee4009effca6b881dc30af73603f7695990c96ac0d8",
+        "dag_metrics.json": "05bd46706872027bb9c6c36dbae17397f5a5561b3632a6e9b253c7fbcbd8a535"
+      },
+      "network": {
+        "ave_degree": 4.0,
+        "avg_tp_change_interval": 10.0,
+        "bandwidth_adv": 5.0,
+        "bandwidth_honest": 5.0,
+        "dynamic": false,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "enable_resume_transfer": true,
+        "init_mode": "rand",
+        "max_allowed_partitions": 1.0,
+        "outage_prob": 0.0,
+        "rand_mode": "binomial",
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "show_label": false,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "topology_path": "conf/topologies/circular32_coo.csv"
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "difficulty/DAG/TopologyNetwork/d10/seed7",
+      "sha256": {
+        "run_manifest.json": "463c4dd2ab97b44e4d187407eda5431ff77176d9ab52ee860f1c5327edefc47d",
+        "dag_metrics.json": "82b2673b8efeb00615e9c3c60d7351c0732e8f897e6a53203ebdbd984d2efdf1"
+      },
+      "network": {
+        "ave_degree": 4.0,
+        "avg_tp_change_interval": 10.0,
+        "bandwidth_adv": 5.0,
+        "bandwidth_honest": 5.0,
+        "dynamic": false,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "enable_resume_transfer": true,
+        "init_mode": "rand",
+        "max_allowed_partitions": 1.0,
+        "outage_prob": 0.0,
+        "rand_mode": "binomial",
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "show_label": false,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "topology_path": "conf/topologies/circular32_coo.csv"
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "difficulty/DAG/TopologyNetwork/d12/seed7",
+      "sha256": {
+        "run_manifest.json": "213ef3075273d7d3136627e02a2693d3864fb3c4cee5c06bb7605877ee629707",
+        "dag_metrics.json": "2e0d5218de01736b362299898d46231aad1819034a7d838cfb081913fe7a90bd"
+      },
+      "network": {
+        "ave_degree": 4.0,
+        "avg_tp_change_interval": 10.0,
+        "bandwidth_adv": 5.0,
+        "bandwidth_honest": 5.0,
+        "dynamic": false,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "enable_resume_transfer": true,
+        "init_mode": "rand",
+        "max_allowed_partitions": 1.0,
+        "outage_prob": 0.0,
+        "rand_mode": "binomial",
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "show_label": false,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "topology_path": "conf/topologies/circular32_coo.csv"
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "difficulty/DAG/TopologyNetwork/d14/seed7",
+      "sha256": {
+        "run_manifest.json": "118dc7d01bb704c8b7c19f7bd4050b024d684ed65b2e948f323bede26568ce9b",
+        "dag_metrics.json": "1b6f18eb179e9f0d76d9177bf28daa4b8f0eb451bf91980c1221f577b7ca5dcb"
+      },
+      "network": {
+        "ave_degree": 4.0,
+        "avg_tp_change_interval": 10.0,
+        "bandwidth_adv": 5.0,
+        "bandwidth_honest": 5.0,
+        "dynamic": false,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "enable_resume_transfer": true,
+        "init_mode": "rand",
+        "max_allowed_partitions": 1.0,
+        "outage_prob": 0.0,
+        "rand_mode": "binomial",
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "show_label": false,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "topology_path": "conf/topologies/circular32_coo.csv"
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    },
+    {
+      "path": "difficulty/DAG/TopologyNetwork/d16/seed7",
+      "sha256": {
+        "run_manifest.json": "2af047dd851dac23949e3eac5930ab1d55f5baee50ef2dfb49f665d6a2059cc1",
+        "dag_metrics.json": "8097556c5f8ee182c81db87bdb119cffc59b52146bf2e92a079661534d422885"
+      },
+      "network": {
+        "ave_degree": 4.0,
+        "avg_tp_change_interval": 10.0,
+        "bandwidth_adv": 5.0,
+        "bandwidth_honest": 5.0,
+        "dynamic": false,
+        "edge_add_prob": 0.1,
+        "edge_remove_prob": 0.05,
+        "enable_resume_transfer": true,
+        "init_mode": "rand",
+        "max_allowed_partitions": 1.0,
+        "outage_prob": 0.0,
+        "rand_mode": "binomial",
+        "save_routing_graph": false,
+        "save_routing_history": true,
+        "show_label": false,
+        "stat_prop_times": [
+          0.03,
+          0.05,
+          0.08,
+          0.1,
+          0.2,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.93,
+          0.95,
+          0.98,
+          1.0
+        ],
+        "topology_path": "conf/topologies/circular32_coo.csv"
+      },
+      "seed_verified": true,
+      "target_verified": true,
+      "target_source": "run_manifest"
+    }
+  ],
+  "source_results_root": "Results/honest_cli_run01",
+  "source_observations_sha256": "c406068d3532ad532aa5e27b309d3d3c60f56fcd781d03864575179b0289a5ce"
+}

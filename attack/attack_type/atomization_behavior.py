@@ -43,7 +43,8 @@ class AtomizationBehavior(aa.AtomizationBehavior):
                 if eclipse_list_ids is not None and last_hop in eclipse_list_ids:
                     # 如果是消息区块 判断区块来源 根据来源标记该区块
                     imcoming_block_from_eclipse[incoming_block.blockhash] = incoming_block
-                    if temp_miner not in attackers_with_honest_neighbors:
+                    # Optional neighbor map may be None.
+                    if attackers_with_honest_neighbors is None or temp_miner not in attackers_with_honest_neighbors:
                         # 如果攻击者没有诚实邻居 则需要将区块合并到本地链，避免被月蚀攻击矿工反复发区块
                         filtered_receive_tape.append(incoming_block)
                 else: # 从攻击节点的准进消息中剔除对应标记区块 防止二次处理

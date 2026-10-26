@@ -16,22 +16,38 @@ class Consensus(metaclass=ABCMeta):        #抽象类
     class BlockHead(data.BlockHead):
         '''表述BlockHead的抽象类，重写初始化方法但是calculate_blockhash未实现'''
         __slots__ = []
-        def __init__(self, preblock:data.Block=None, timestamp=0, content=b'', miner_id=-1):
+        # 新头字段只用关键字，旧位置参数原样保留。
+        def __init__(self, preblock:data.Block=None, timestamp=0, content=b'', miner_id=-1,
+                     *, header_version=1, refhashes=(), prehash=None):
             '''此处的默认值为创世区块中的值'''
-            prehash = preblock.blockhash if preblock else (0).to_bytes(HASH_LEN, BYTE_ORDER)
-            super().__init__(prehash, timestamp, content, miner_id)
+            # 模板可用本地父，wire头可仅有hash；二者不能冲突。
+            if preblock is not None and prehash is not None and preblock.blockhash != prehash:
+                raise ValueError('prehash must match the supplied preblock')
+            parent_hash = prehash if prehash is not None else (preblock.blockhash if preblock else (0).to_bytes(HASH_LEN, BYTE_ORDER))
+            super().__init__(parent_hash, timestamp, content, miner_id,
+                             header_version=header_version, refhashes=refhashes)
 
     class Block(data.Block):
         '''与chain.Block功能相同但是重写初始化方法'''
         __slots__ = []
         def __init__(self, blockhead: data.BlockHead, preblock: data.Block = None,
-                     isadversary=False, blocksize_MB=2):
-            '''当preblock没有指定时默认为创世区块，高度为0'''
-            block_number = global_var.get_block_number() if preblock else 0
-            height = preblock.height+1 if preblock else 0
-            is_genesis = False if preblock else True
-            super().__init__(f"B{block_number}", blockhead, height, 
-                             isadversary, is_genesis, blocksize_MB)
+                     isadversary=False, blocksize_MB=2, *, dag_rank=None):  # 
+            """v1无父默认为创世；v2依据规范头区分创世与缺父消息。"""
+            # v2先按头区分创世/缺父；不预执行旧高度运算。
+            if blockhead.header_version == 2:
+                from .conflux_codec import is_genesis_header
+                is_genesis = is_genesis_header(blockhead)
+                if preblock is not None and preblock.blockhash != blockhead.prehash:
+                    raise ValueError('prehash must match the supplied preblock')
+                block_number = 0 if is_genesis else global_var.get_block_number()
+                height = 0 if is_genesis else (preblock.height+1 if preblock is not None and preblock.height is not None else None)
+            else:
+                # 以下v1编号/高度/创世逻辑逐句保留。
+                block_number = global_var.get_block_number() if preblock else 0
+                height = preblock.height+1 if preblock else 0
+                is_genesis = False if preblock else True
+            super().__init__(f"B{block_number}", blockhead, height,
+                             isadversary, is_genesis, blocksize_MB, dag_rank=dag_rank)
 
     def create_genesis_block(self, chain:data.Chain, blockheadextra:dict = None, 
                              blockextra:dict = None):

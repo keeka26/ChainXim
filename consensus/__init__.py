@@ -1,5 +1,6 @@
 from .consensus_abc import Consensus
 from .pow import PoW
+from .conflux import ConfluxPoW  # DAG共识与原单链共识共用导出入口。
 from .pos import PoS
 from .virtualpow import VirtualPoW
 from .pbft import PBFT

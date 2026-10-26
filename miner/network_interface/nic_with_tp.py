@@ -29,6 +29,9 @@ class NICWithTp(NetworkInterface):
         # 输出队列(拓扑网络)
         self._output_queues = defaultdict(list[Message | tuple[Message, int]])
         self._channel_states = {}
+        # 原NIC保留，诚实DAG传输状态交独立助手。
+        from .conflux_sync import ConfluxSync
+        self._dag_sync = ConfluxSync(self) if miner.dag_enabled else None
 
     def __has_received(self, block_name:str):
         return self._segment_buffer.get(block_name, False) is None # None表示已经收到完整区块,segment_buffer已经清空
@@ -44,10 +47,16 @@ class NICWithTp(NetworkInterface):
         for neighbor in self._neighbors:
             self._output_queues[neighbor] = []
             self._channel_states[neighbor] = _IDLE
+            # 初始化原generator已有邻居的请求状态。
+            if self._dag_sync is not None:
+                self._dag_sync.queued.setdefault(neighbor, set())
 
     def remove_neighbor(self, remove_id:int):
         """断开连接，从neighbor列表移除
         """
+        # 旧单链继续走原路径。
+        if self._dag_sync is not None:
+            return self._dag_sync.disconnect(remove_id)
         if remove_id not in self._neighbors:
             logger.warning("M%d: remove neighbour M%d Failed! not connected", 
                            self.miner_id, remove_id)
@@ -69,6 +78,9 @@ class NICWithTp(NetworkInterface):
         return self._network.get_number_of_segments_to_send(source, target)
 
     def add_neighbor(self, add_id:int, round):
+        # 旧单链继续走原路径。
+        if self._dag_sync is not None:
+            return self._dag_sync.connect(add_id, round)
         if add_id in self._neighbors:
             logger.warning("M%d: add neighbour M%d Failed! already connected", 
                            self.miner.miner_id,add_id)
@@ -84,6 +96,9 @@ class NICWithTp(NetworkInterface):
 
     def nic_receive(self, packet: Packet):
         '''处理接收到的消息, 直接调用miner.receive'''
+        # 旧单链继续走原路径。
+        if self._dag_sync is not None:
+            return self._dag_sync.receive(packet)
         self._receive_buffer.append(packet)
         payload = packet.payload
         source = packet.source
@@ -129,6 +144,9 @@ class NICWithTp(NetworkInterface):
         return [DataSegment(block, sid) for sid in segids]
 
     def nic_forward(self, round):
+        # 旧单链继续走原路径。
+        if self._dag_sync is not None:
+            return self._dag_sync.forward(round)
         # 将 forward_buffer 写入 output_queue 中
         if (len(self._forward_buffer[SELF_GEN_MSG]) != 0 or
             len(self._forward_buffer[OUTER_RCV_MSG]) != 0):
@@ -238,6 +256,9 @@ class NICWithTp(NetworkInterface):
         """
         接收到inv消息后, 返回getData, 包含自己需要的区块
         """
+        # 旧单链继续走原路径。
+        if self._dag_sync is not None:
+            return self._dag_sync.reply_getdata(inv)
         getData = GetDataMsg(self.miner.miner_id, inv.source, [inv.block_or_seg])
 
         if isinstance(inv.block_or_seg, DataSegment):
@@ -344,6 +365,9 @@ class NICWithTp(NetworkInterface):
         """
         消息发送完成后，用于接收是否发送成功的回复
         """
+        # 旧单链继续走原路径。
+        if self._dag_sync is not None:
+            return self._dag_sync.get_reply(cur_round, target, err, rest_delay)
         # 传输成功即将信道状态置为空闲
         if err is None:
             logger.info("round %d, M%d -> M%d: Forward  %s success!", 

@@ -40,7 +40,8 @@ class NetworkInterface(metaclass=ABCMeta):
         if msg_source_type != SELF_GEN_MSG and msg_source_type != OUTER_RCV_MSG:
             raise ValueError("Message source type must be SELF_GEN_MSG or OUTER_RCV_MSG")
         if msg_source_type == SELF_GEN_MSG:
-            if self._network.withTopology and syncLocalChain and isinstance(msg, Block):
+            # DAG保留真实自产块，不以单链同步哨兵替代。
+            if self._network.withTopology and syncLocalChain and isinstance(msg, Block) and not self.miner.dag_enabled:
                 msg = SYNC_LOC_CHAIN
             self._forward_buffer[SELF_GEN_MSG].append([msg, forward_strategy, spec_target])
             if (not self._network.withTopology and len(self._forward_buffer[SELF_GEN_MSG]) > 1 

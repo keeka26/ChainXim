@@ -22,6 +22,9 @@ class NICWithoutTp(NetworkInterface):
             return 
         for msg,_,_ in self._forward_buffer[SELF_GEN_MSG]:
             self._network.access_network([msg], self.miner_id, round)
+            # 真正进入网络后记录首次发布，不能以生成替代发布。
+            if self.miner.dag_enabled and self.miner.dag_publication_observer is not None:
+                self.miner.dag_publication_observer(msg, round)
         self.clear_forward_buffer()
         
     def append_forward_buffer(self, msg, msg_source_type, forward_strategy = ..., spec_target = None, syncLocalChain=False):
